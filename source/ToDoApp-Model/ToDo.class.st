@@ -30,8 +30,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'description',
-		'assignedEmployee',
-		'state'
+		'state',
+		'possibleAssignedEmployee'
 	],
 	#category : #'ToDoApp-Model'
 }
@@ -58,7 +58,9 @@ ToDo class >> markAsFinishedWhenIsInProgress [
 { #category : #assertions }
 ToDo >> assertIsAssigned [
 
-	assignedEmployee ifNil: [ AssertionFailed signal: 'An in-progress ToDo must be assigned' ]
+	self
+		withAssignedEmployeeDo: [ "do nothing.- lespinosa" ]
+		ifNone: [ AssertionFailed signal: 'An in-progress ToDo must be assigned' ]
 ]
 
 { #category : #movement }
@@ -70,13 +72,7 @@ ToDo >> assignTo: anEmployee [
 { #category : #movement }
 ToDo >> assignWhenIsOpen: anEmployee [
 
-	assignedEmployee := anEmployee 
-]
-
-{ #category : #accessing }
-ToDo >> assignedEmployee [
-
-	^ assignedEmployee
+	possibleAssignedEmployee := anEmployee 
 ]
 
 { #category : #movement }
@@ -104,4 +100,10 @@ ToDo >> markAsInProgress [
 	self assertIsAssigned.
 	
 	state := InProgressToDo new.
+]
+
+{ #category : #accessing }
+ToDo >> withAssignedEmployeeDo: anAssignedEmployeeBlock ifNone: aNoneBlock [
+
+	^ possibleAssignedEmployee ifNil: aNoneBlock ifNotNil: anAssignedEmployeeBlock
 ]

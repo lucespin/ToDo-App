@@ -6,14 +6,16 @@ Class {
 
 { #category : #tests }
 ToDoTests >> testAssignTo [
-	
+
 	| aToDo |
-	
+
 	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
-	
+
 	aToDo assignTo: 'Dexter'.
-	
-	self assert: aToDo assignedEmployee equals: 'Dexter'
+
+	aToDo
+		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee equals: 'Dexter' ]
+		ifNone: [ self fail ]
 ]
 
 { #category : #tests }
