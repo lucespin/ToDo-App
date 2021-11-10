@@ -35,6 +35,7 @@ ToDoTests >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
 
 { #category : #tests }
 ToDoTests >> testCreateAToDoWithoutDescriptionShouldFaild [
+
 	self
 		should: [ ToDo describedBy: nil ]
 		raise: AssertionFailed
