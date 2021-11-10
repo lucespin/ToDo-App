@@ -9,7 +9,7 @@ SmalltalkCISpec {
   ],
   #testing : {
     #coverage : {
-      #packages : [ 'ToDo-App*' ],
+      #packages : [ 'ToDoApp*' ],
       #format: #lcov
     }
   }
