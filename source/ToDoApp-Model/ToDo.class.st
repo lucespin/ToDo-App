@@ -47,7 +47,7 @@ ToDo class >> describedBy: aDescription [
 
 	self assertDescriptionNotNull: aDescription.
 
-	^ self new withDescription: aDescription
+	^ self new describedBy: aDescription
 ]
 
 { #category : #movement }
@@ -85,6 +85,13 @@ ToDo >> changeToFinishedWhenIsInProgress [
 	state := FinishedToDo new.
 ]
 
+{ #category : #initialization }
+ToDo >> describedBy: aDescription [ 
+
+	description := aDescription.
+	state := OpenToDo new
+]
+
 { #category : #movement }
 ToDo >> markAsFinished [
 
@@ -97,11 +104,4 @@ ToDo >> markAsInProgress [
 	self assertIsAssigned.
 	
 	state := InProgressToDo new.
-]
-
-{ #category : #initialization }
-ToDo >> withDescription: aString [
-
-	description := aString.
-	state := OpenToDo new
 ]
