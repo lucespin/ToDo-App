@@ -31,7 +31,7 @@ ToDoTests >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
 	self
 		should: [ aToDo assignTo: 'Debora' ]
 		raise: AssertionFailed
-		description: 'A finished ToDo can''t be reassigned'
+		withMessageText: 'A finished ToDo can''t be reassigned'
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ ToDoTests >> testCreateAToDoWithoutDescriptionShouldFaild [
 	self
 		should: [ ToDo describedBy: nil ]
 		raise: AssertionFailed
-		description: 'A ToDo have a description'
+		withMessageText: 'A ToDo have a description'
 ]
 
 { #category : #tests }
@@ -55,7 +55,7 @@ ToDoTests >> testMarkAsFinishedIfToDoIsOpenShouldFail [
 	self
 		should: [ aToDo markAsFinished. ]
 		raise: AssertionFailed
-		description: 'An Open ToDo can''t be finished directy'
+		withMessageText: 'An Open ToDo can''t be finished directy'
 ]
 
 { #category : #tests }
@@ -68,5 +68,5 @@ ToDoTests >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 	self
 		should: [ aToDo markAsInProgress ]
 		raise: AssertionFailed
-		description: 'An in-progress ToDo must be assigned'
+		withMessageText: 'An in-progress ToDo must be assigned'
 ]
