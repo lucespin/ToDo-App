@@ -23,9 +23,10 @@ ToDoTests >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
 
 	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
 
-	aToDo assignTo: 'Dexter'.
-	aToDo markAsInProgress.
-	aToDo markAsFinished.
+	aToDo
+		assignTo: 'Dexter';
+		markAsInProgress;
+		markAsFinished.
 
 	self
 		should: [ aToDo assignTo: 'Debora' ]
