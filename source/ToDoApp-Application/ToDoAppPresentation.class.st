@@ -61,13 +61,36 @@ ToDoAppPresentation >> componentSupplierForApplication [
 ]
 
 { #category : #accessing }
+ToDoAppPresentation >> contentOfMainContainer [
+
+	^ [ :aCanvas | 
+		self
+			renderHeadingOn: aCanvas;
+			renderTableOn: aCanvas
+	]
+]
+
+{ #category : #accessing }
 ToDoAppPresentation >> contentView [
 
-	^ [ :canvas | ]
+	^ self componentSupplier
+		divisionContainerWrapping: self contentOfMainContainer
+		applying: [ :div | div addClass bootstrap3 container ]
 ]
 
 { #category : #accessing }
 ToDoAppPresentation >> jQueryLibrary [
 
 	   ^ JQuery3OnlineLibrary default
+]
+
+{ #category : #accessing }
+ToDoAppPresentation >> renderHeadingOn: aCanvas [
+
+	^ aCanvas
+		render:
+			(HeadingWebView
+				displaying: 'ToDo App'
+				withLevel: 1
+				applying: [ :heading | heading setStyleTo: [ :style | style textAlign: #center ] ])
 ]
