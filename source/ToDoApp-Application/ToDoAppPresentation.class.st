@@ -94,3 +94,35 @@ ToDoAppPresentation >> renderHeadingOn: aCanvas [
 				withLevel: 1
 				applying: [ :heading | heading setStyleTo: [ :style | style textAlign: #center ] ])
 ]
+
+{ #category : #accessing }
+ToDoAppPresentation >> renderTableOn: aCanvas [
+
+	| toDosTable |
+
+	toDosTable := TableWebViewBuilder new
+		addColumn: [ :column | 
+			column
+				titled: 'Start Date';
+				rendering: [ ] asWebComponentCommand
+		];
+		addColumn: [ :column | 
+			column
+				titled: 'Description';
+				rendering: [ ] asWebComponentCommand
+		];
+		addColumn: [ :column | 
+			column
+				titled: 'Completion Date';
+				rendering: [ ] asWebComponentCommand
+		];
+		addColumn: [ :column | 
+			column
+				titled: 'Assigned To';
+				rendering: [ ] asWebComponentCommand
+		];
+		styledWith: '.table-responsiver';
+		build.
+
+	^ aCanvas render: toDosTable
+]
