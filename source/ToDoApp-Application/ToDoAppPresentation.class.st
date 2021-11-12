@@ -41,7 +41,7 @@ ToDoAppPresentation class >> handlerName [
 { #category : #accessing }
 ToDoAppPresentation class >> start [
 
-	(ZnZincServerAdaptor port: 8080) start.
+	(ZnZincServerAdaptor port: 8085) start.
 	self registerAsDevelopmentApplication
 ]
 
