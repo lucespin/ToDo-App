@@ -61,68 +61,19 @@ ToDoAppPresentation >> componentSupplierForApplication [
 ]
 
 { #category : #accessing }
-ToDoAppPresentation >> contentOfMainContainer [
-
-	^ [ :aCanvas | 
-		self
-			renderHeadingOn: aCanvas;
-			renderTableOn: aCanvas
-	]
-]
-
-{ #category : #accessing }
 ToDoAppPresentation >> contentView [
 
 	^ self componentSupplier
-		divisionContainerWrapping: self contentOfMainContainer
-		applying: [ :div | div addClass bootstrap3 container ]
+		divisionContainerWrapping: [ :aCanvas | 
+			aCanvas render: ToDoAppHeadingWebView new.
+			aCanvas render: ToDoAppTableWebView new
+		]
+		applying:
+			[ :div | div addClass bootstrap3 container + (div setStyleTo: [ :style | style fontSize: 125 percent ]) ]
 ]
 
 { #category : #accessing }
 ToDoAppPresentation >> jQueryLibrary [
 
 	   ^ JQuery3OnlineLibrary default
-]
-
-{ #category : #accessing }
-ToDoAppPresentation >> renderHeadingOn: aCanvas [
-
-	^ aCanvas
-		render:
-			(HeadingWebView
-				displaying: 'ToDo App'
-				withLevel: 1
-				applying: [ :heading | heading setStyleTo: [ :style | style textAlign: #center ] ])
-]
-
-{ #category : #accessing }
-ToDoAppPresentation >> renderTableOn: aCanvas [
-
-	| toDosTable |
-
-	toDosTable := TableWebViewBuilder new
-		addColumn: [ :column | 
-			column
-				titled: 'Start Date';
-				rendering: [ ] asWebComponentCommand
-		];
-		addColumn: [ :column | 
-			column
-				titled: 'Description';
-				rendering: [ ] asWebComponentCommand
-		];
-		addColumn: [ :column | 
-			column
-				titled: 'Completion Date';
-				rendering: [ ] asWebComponentCommand
-		];
-		addColumn: [ :column | 
-			column
-				titled: 'Assigned To';
-				rendering: [ ] asWebComponentCommand
-		];
-		styledWith: '.table-responsiver';
-		build.
-
-	^ aCanvas render: toDosTable
 ]
