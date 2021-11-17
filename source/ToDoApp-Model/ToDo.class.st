@@ -58,7 +58,7 @@ ToDo >> assertIsAssigned [
 
 	self
 		withAssignedEmployeeDo: [ "do nothing.- lespinosa" ]
-		ifNone: [ AssertionFailed signal: 'An in-progress ToDo must be assigned' ]
+		ifNone: [ AssertionFailed signal: 'ToDo not assigned' ]
 ]
 
 { #category : #movement }

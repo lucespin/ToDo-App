@@ -43,7 +43,7 @@ ToDoTest >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 	self
 		should: [ aToDo markAsInProgress ]
 		raise: AssertionFailed
-		withMessageText: 'An in-progress ToDo must be assigned'
+		withMessageText: 'ToDo not assigned'
 ]
 
 { #category : #tests }
