@@ -7,6 +7,12 @@ Class {
 	#category : #'ToDoApp-Tests'
 }
 
+{ #category : #running }
+ToDoTest >> setUp [
+
+	writePrologue := ToDo describedBy: 'Write the prologue of Funes, el memorioso.'
+]
+
 { #category : #tests }
 ToDoTest >> testANewToDoIsOpen [
 
@@ -104,6 +110,20 @@ ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 		should: [ ToDo describedBy: '' ]
 		raise: InstanceCreationFailed
 		withMessageText: 'A ToDo must have a description.'
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
+
+	writePrologue
+		assignTo: 'Jorge Luis Borges';
+		markAsInProgress;
+		markAsFinished.
+
+	self assert: writePrologue isFinished.
+
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isInProgress
 ]
 
 { #category : #tests }
