@@ -50,11 +50,6 @@ ToDo class >> describedBy: aDescription [
 	^ self new describedBy: aDescription
 ]
 
-{ #category : #movement }
-ToDo class >> markAsFinishedWhenIsInProgress [
-	self shouldBeImplemented.
-]
-
 { #category : #assertions }
 ToDo >> assertIsAssigned [
 
