@@ -5,6 +5,19 @@ Class {
 }
 
 { #category : #tests }
+ToDoTest >> testANewToDoIsOpen [
+
+	| release |
+
+	release := ToDo describedBy: 'Release 2.0 version'.
+
+	self assert: release isOpen.
+
+	self deny: release isInProgress.
+	self deny: release isFinished
+]
+
+{ #category : #tests }
 ToDoTest >> testAssignAToDoToAnEmployee [
 
 	| aToDo |
