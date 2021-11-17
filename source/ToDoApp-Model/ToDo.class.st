@@ -53,7 +53,7 @@ ToDo class >> describedBy: aDescription [
 	^ self new describedBy: aDescription
 ]
 
-{ #category : #'private - asserting' }
+{ #category : #assertions }
 ToDo >> assertIsAssigned [
 
 	self
@@ -86,7 +86,7 @@ ToDo >> describedBy: aDescription [
 	state := OpenToDo new
 ]
 
-{ #category : #boolean }
+{ #category : #'as yet unclassified' }
 ToDo >> isFinished [
 
 	^ state isFinished
