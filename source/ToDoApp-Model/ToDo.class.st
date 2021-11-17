@@ -83,6 +83,12 @@ ToDo >> describedBy: aDescription [
 	state := OpenToDo new
 ]
 
+{ #category : #'as yet unclassified' }
+ToDo >> isFinished [
+
+	^ state isFinished
+]
+
 { #category : #movement }
 ToDo >> markAsFinished [
 

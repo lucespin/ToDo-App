@@ -32,6 +32,12 @@ FinishedToDo >> assign: aToDo to: anEmployee [
 	AssertionFailed signal: 'A finished ToDo can''t be reassigned'
 ]
 
+{ #category : #isFinished }
+FinishedToDo >> isFinished [
+
+	^ true
+]
+
 { #category : #'instance creation' }
 FinishedToDo >> markAsFinished: aToDo [
 ]
