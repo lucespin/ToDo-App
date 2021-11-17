@@ -19,15 +19,6 @@ ToDoTest >> testAssignAToDoToAnEmployee [
 ]
 
 { #category : #tests }
-ToDoTest >> testCreateAToDoWithoutDescriptionShouldFaild [
-
-	self
-		should: [ ToDo describedBy: nil ]
-		raise: AssertionFailed
-		withMessageText: 'A ToDo have a description'
-]
-
-{ #category : #tests }
 ToDoTest >> testMarkAsFinishedIfToDoIsOpenShouldFail [
 
 	| aToDo |
@@ -71,4 +62,13 @@ ToDoTest >> testWhenAFinishedToDoIsAssignedToAnEmployeeThenShouldFail [
 		should: [ aToDo assignTo: 'Debora' ]
 		raise: AssertionFailed
 		withMessageText: 'A finished ToDo can''t be reassigned'
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
+
+	self
+		should: [ ToDo describedBy: '' ]
+		raise: InstanceCreationFailed
+		withMessageText: 'A ToDo must have a description.'
 ]

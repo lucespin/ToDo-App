@@ -37,15 +37,18 @@ Class {
 }
 
 { #category : #assertions }
-ToDo class >> assertDescriptionNotNull: aDescription [
+ToDo class >> assertDescriptionIsNotEmpty: aDescription [
 
-	aDescription ifNil: [ AssertionFailed signal: 'A ToDo have a description' ]
+	AssertionChecker
+		enforce: [ aDescription isNotEmpty ]
+		because: 'A ToDo must have a description.'
+		raising: InstanceCreationFailed
 ]
 
 { #category : #'instance creation' }
 ToDo class >> describedBy: aDescription [
 
-	self assertDescriptionNotNull: aDescription.
+	self assertDescriptionIsNotEmpty: aDescription.
 
 	^ self new describedBy: aDescription
 ]
