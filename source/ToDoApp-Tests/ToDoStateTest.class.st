@@ -15,6 +15,15 @@ ToDoStateTest >> setUp [
 ]
 
 { #category : #tests }
+ToDoStateTest >> testAssignAnEmployeeToAFinishedToDoShouldFail [
+
+	self
+		should: [ FinishedToDo new assign: cleanTheToilet to: 'Dexter' ]
+		raise: AssertionFailed
+		withMessageText: 'A finished ToDo can''t be reassigned'
+]
+
+{ #category : #tests }
 ToDoStateTest >> testAssignAnEmployeeToAnInprogressToDoShouldFail [
 
 	self
@@ -34,10 +43,10 @@ ToDoStateTest >> testWhenAFinishedToDoIsMarkedAsFinishedThenNotChange [
 		assignTo: 'Dexter';
 		markAsInProgress;
 		markAsFinished.
-		
+
 	self assert: aToDo isFinished.
-		
+
 	FinishedToDo new markAsFinished: aToDo.
-		
-	self assert: aToDo isFinished.
+
+	self assert: aToDo isFinished
 ]
