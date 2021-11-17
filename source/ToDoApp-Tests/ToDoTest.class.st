@@ -1,6 +1,9 @@
 Class {
 	#name : #ToDoTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'writePrologue'
+	],
 	#category : #'ToDoApp-Tests'
 }
 
@@ -18,7 +21,7 @@ ToDoTest >> testANewToDoIsOpen [
 ]
 
 { #category : #tests }
-ToDoTest >> testAssignAToDoToAnEmployee [
+ToDoTest >> testAssignAnOpenToDoToAnEmployee [
 
 	| aToDo |
 
@@ -32,7 +35,25 @@ ToDoTest >> testAssignAToDoToAnEmployee [
 ]
 
 { #category : #tests }
-ToDoTest >> testMarkAsFinishedIfToDoIsOpenShouldFail [
+ToDoTest >> testAssingToAnEmployeeAFinishedToDoShouldFail [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
+
+	aToDo
+		assignTo: 'Dexter';
+		markAsInProgress;
+		markAsFinished.
+
+	self
+		should: [ aToDo assignTo: 'Debora' ]
+		raise: AssertionFailed
+		withMessageText: 'A finished ToDo can''t be reassigned'
+]
+
+{ #category : #tests }
+ToDoTest >> testMarkAsFinishedAnOpenToDoShouldFail [
 
 	| aToDo |
 
@@ -57,24 +78,6 @@ ToDoTest >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 		should: [ aToDo markAsInProgress ]
 		raise: AssertionFailed
 		withMessageText: 'ToDo not assigned'
-]
-
-{ #category : #tests }
-ToDoTest >> testWhenAFinishedToDoIsAssignedToAnEmployeeThenShouldFail [
-
-	| aToDo |
-
-	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
-
-	aToDo
-		assignTo: 'Dexter';
-		markAsInProgress;
-		markAsFinished.
-
-	self
-		should: [ aToDo assignTo: 'Debora' ]
-		raise: AssertionFailed
-		withMessageText: 'A finished ToDo can''t be reassigned'
 ]
 
 { #category : #tests }
