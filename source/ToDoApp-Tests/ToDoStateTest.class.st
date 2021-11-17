@@ -129,7 +129,7 @@ ToDoStateTest >> testWhenAnInProgressToDoIsMarkedAsFinishedThenIsFinished [
 ]
 
 { #category : #tests }
-ToDoStateTest >> testWhenAnOpenToDoIsAssignedThenHaveAnAssingnedEmployee [
+ToDoStateTest >> testWhenAnOpenToDoIsAssignedThenHaveAnAssignedEmployee [
 
 	| aToDo |
 
