@@ -53,6 +53,23 @@ ToDoTest >> testAssingToAnEmployeeAFinishedToDoShouldFail [
 ]
 
 { #category : #tests }
+ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
+
+	aToDo
+		assignTo: 'Dexter';
+		markAsInProgress.
+
+	self
+		should: [ aToDo assignTo: 'Debora' ]
+		raise: AssertionFailed
+		withMessageText: 'An in-progress ToDo can''t be reassigned'
+]
+
+{ #category : #tests }
 ToDoTest >> testMarkAsFinishedAnOpenToDoShouldFail [
 
 	| aToDo |
