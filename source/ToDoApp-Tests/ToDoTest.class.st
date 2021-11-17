@@ -113,6 +113,21 @@ ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 ]
 
 { #category : #tests }
+ToDoTest >> testWhenMarkAsFinishedAFinishedToDoThenIsFinished [
+
+	writePrologue
+		assignTo: 'Jorge Luis Borges';
+		markAsInProgress;
+		markAsFinished;
+		markAsFinished.
+
+	self assert: writePrologue isFinished.
+
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isInProgress
+]
+
+{ #category : #tests }
 ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
 
 	writePrologue
