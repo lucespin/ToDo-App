@@ -118,3 +118,17 @@ ToDoStateTest >> testWhenAnInProgressToDoIsMarkedAsFinishedThenIsFinished [
 
 	self assert: aToDo isFinished.
 ]
+
+{ #category : #tests }
+ToDoStateTest >> testWhenAnOpenToDoIsAssignedThenHaveAnAssingnedEmployee [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Preparar equipo'.
+	
+	OpenToDo new assign: aToDo to: 'Dexter'.
+	
+	aToDo
+		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee equals: 'Dexter' ]
+		ifNone: [ self assert: false ]
+]
