@@ -85,3 +85,19 @@ ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 		raise: InstanceCreationFailed
 		withMessageText: 'A ToDo must have a description.'
 ]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
+
+	| donate |
+
+	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
+	donate
+		assignTo: 'Aye';
+		markAsInProgress.
+
+	self assert: donate isInProgress.
+
+	self deny: donate isOpen.
+	self deny: donate isFinished
+]
