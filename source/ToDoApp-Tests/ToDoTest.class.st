@@ -5,6 +5,19 @@ Class {
 }
 
 { #category : #tests }
+ToDoTest >> testANewToDoIsOpen [
+
+	| release |
+
+	release := ToDo describedBy: 'Release 2.0 version'.
+
+	self assert: release isOpen.
+
+	self deny: release isInProgress.
+	self deny: release isFinished
+]
+
+{ #category : #tests }
 ToDoTest >> testAssignAToDoToAnEmployee [
 
 	| aToDo |
@@ -71,4 +84,18 @@ ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 		should: [ ToDo describedBy: '' ]
 		raise: InstanceCreationFailed
 		withMessageText: 'A ToDo must have a description.'
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
+
+	| donate |
+
+	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
+	donate markAsInProgress.
+
+	self assert: donate isInProgress.
+
+	self deny: donate isOpen.
+	self deny: donate isFinished
 ]
