@@ -87,6 +87,15 @@ ToDoStateTest >> testAssignAnEmployeeToAnInprogressToDoShouldFail [
 ]
 
 { #category : #tests }
+ToDoStateTest >> testMarkAsFinishedAnOpenToDoShouldFail [
+
+	self
+		should: [ OpenToDo new markAsFinished: cleanTheToilet ]
+		raise: AssertionFailed
+		withMessageText: 'An Open ToDo can''t be finished directy'
+]
+
+{ #category : #tests }
 ToDoStateTest >> testWhenAFinishedToDoIsMarkedAsFinishedThenIsFinished [
 
 	| aToDo |
