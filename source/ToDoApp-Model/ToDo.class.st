@@ -37,25 +37,28 @@ Class {
 }
 
 { #category : #assertions }
-ToDo class >> assertDescriptionNotNull: aDescription [
+ToDo class >> assertDescriptionIsNotEmpty: aDescription [
 
-	aDescription ifNil: [ AssertionFailed signal: 'A ToDo have a description' ]
+	AssertionChecker
+		enforce: [ aDescription isNotEmpty ]
+		because: 'A ToDo must have a description.'
+		raising: InstanceCreationFailed
 ]
 
 { #category : #'instance creation' }
 ToDo class >> describedBy: aDescription [
 
-	self assertDescriptionNotNull: aDescription.
+	self assertDescriptionIsNotEmpty: aDescription.
 
 	^ self new describedBy: aDescription
 ]
 
-{ #category : #assertions }
+{ #category : #'private - asserting' }
 ToDo >> assertIsAssigned [
 
 	self
 		withAssignedEmployeeDo: [ "do nothing.- lespinosa" ]
-		ifNone: [ AssertionFailed signal: 'An in-progress ToDo must be assigned' ]
+		ifNone: [ AssertionFailed signal: 'ToDo not assigned' ]
 ]
 
 { #category : #movement }
@@ -83,10 +86,22 @@ ToDo >> describedBy: aDescription [
 	state := OpenToDo new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #boolean }
 ToDo >> isFinished [
 
 	^ state isFinished
+]
+
+{ #category : #boolean }
+ToDo >> isInProgress [
+
+	^ state isInProgress
+]
+
+{ #category : #boolean }
+ToDo >> isOpen [
+
+	^ state isOpen
 ]
 
 { #category : #movement }

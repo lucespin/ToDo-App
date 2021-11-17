@@ -32,6 +32,24 @@ InProgressToDo >> assign: aToDo to: anEmployee [
 	AssertionFailed signal: 'An in-progress ToDo can''t be reassigned'
 ]
 
+{ #category : #isFinished }
+InProgressToDo >> isFinished [
+
+	^ false
+]
+
+{ #category : #boolean }
+InProgressToDo >> isInProgress [
+
+	^ true
+]
+
+{ #category : #boolean }
+InProgressToDo >> isOpen [
+
+	^ false
+]
+
 { #category : #movement }
 InProgressToDo >> markAsFinished: aToDo [
 

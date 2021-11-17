@@ -26,13 +26,31 @@ Class {
 	#category : #'ToDoApp-Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : #movement }
 ToDoState >> assign: aToDo to: anEmployee [
  
 	self subclassResponsibility 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #boolean }
+ToDoState >> isFinished [
+
+	self subclassResponsibility
+]
+
+{ #category : #boolean }
+ToDoState >> isInProgress [
+
+	self subclassResponsibility 
+]
+
+{ #category : #boolean }
+ToDoState >> isOpen [
+
+	self subclassResponsibility
+]
+
+{ #category : #movement }
 ToDoState >> markAsFinished: aToDo [
  
 	self subclassResponsibility 

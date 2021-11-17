@@ -1,11 +1,33 @@
 Class {
 	#name : #ToDoTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'writePrologue'
+	],
 	#category : #'ToDoApp-Tests'
 }
 
+{ #category : #running }
+ToDoTest >> setUp [
+
+	writePrologue := ToDo describedBy: 'Write the prologue of Funes, el memorioso.'
+]
+
 { #category : #tests }
-ToDoTest >> testAssignTo [
+ToDoTest >> testANewToDoIsOpen [
+
+	| release |
+
+	release := ToDo describedBy: 'Release 2.0 version'.
+
+	self assert: release isOpen.
+
+	self deny: release isInProgress.
+	self deny: release isFinished
+]
+
+{ #category : #tests }
+ToDoTest >> testAssignAnOpenToDoToAnEmployee [
 
 	| aToDo |
 
@@ -15,11 +37,11 @@ ToDoTest >> testAssignTo [
 
 	aToDo
 		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee equals: 'Dexter' ]
-		ifNone: [ self fail ]
+		ifNone: [ self assert: false ]
 ]
 
 { #category : #tests }
-ToDoTest >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
+ToDoTest >> testAssingToAnEmployeeAFinishedToDoShouldFail [
 
 	| aToDo |
 
@@ -37,16 +59,24 @@ ToDoTest >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
 ]
 
 { #category : #tests }
-ToDoTest >> testCreateAToDoWithoutDescriptionShouldFaild [
+ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
+
+	aToDo
+		assignTo: 'Dexter';
+		markAsInProgress.
 
 	self
-		should: [ ToDo describedBy: nil ]
+		should: [ aToDo assignTo: 'Debora' ]
 		raise: AssertionFailed
-		withMessageText: 'A ToDo have a description'
+		withMessageText: 'An in-progress ToDo can''t be reassigned'
 ]
 
 { #category : #tests }
-ToDoTest >> testMarkAsFinishedIfToDoIsOpenShouldFail [
+ToDoTest >> testMarkAsFinishedAnOpenToDoShouldFail [
 
 	| aToDo |
 
@@ -70,5 +100,76 @@ ToDoTest >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 	self
 		should: [ aToDo markAsInProgress ]
 		raise: AssertionFailed
-		withMessageText: 'An in-progress ToDo must be assigned'
+		withMessageText: 'ToDo not assigned'
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
+
+	self
+		should: [ ToDo describedBy: '' ]
+		raise: InstanceCreationFailed
+		withMessageText: 'A ToDo must have a description.'
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsFinishedAFinishedToDoThenIsFinished [
+
+	writePrologue
+		assignTo: 'Jorge Luis Borges';
+		markAsInProgress;
+		markAsFinished;
+		markAsFinished.
+
+	self assert: writePrologue isFinished.
+
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isInProgress
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
+
+	writePrologue
+		assignTo: 'Jorge Luis Borges';
+		markAsInProgress;
+		markAsFinished.
+
+	self assert: writePrologue isFinished.
+
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isInProgress
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
+
+	| donate |
+
+	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
+	donate
+		assignTo: 'Aye';
+		markAsInProgress.
+
+	self assert: donate isInProgress.
+
+	self deny: donate isOpen.
+	self deny: donate isFinished
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
+
+	| donate |
+
+	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
+	donate
+		assignTo: 'Aye';
+		markAsInProgress;
+		markAsInProgress.
+
+	self assert: donate isInProgress.
+
+	self deny: donate isOpen.
+	self deny: donate isFinished
 ]

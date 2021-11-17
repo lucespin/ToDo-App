@@ -38,6 +38,18 @@ FinishedToDo >> isFinished [
 	^ true
 ]
 
+{ #category : #boolean }
+FinishedToDo >> isInProgress [
+
+	^ false
+]
+
+{ #category : #boolean }
+FinishedToDo >> isOpen [
+
+	^ false
+]
+
 { #category : #'instance creation' }
 FinishedToDo >> markAsFinished: aToDo [
 ]

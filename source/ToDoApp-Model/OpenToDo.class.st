@@ -32,6 +32,24 @@ OpenToDo >> assign: aToDo to: anEmployee [
 	aToDo assignWhenIsOpen: anEmployee
 ]
 
+{ #category : #boolean }
+OpenToDo >> isFinished [
+
+	^ false
+]
+
+{ #category : #boolean }
+OpenToDo >> isInProgress [
+
+	^ false
+]
+
+{ #category : #boolean }
+OpenToDo >> isOpen [
+
+	^ true
+]
+
 { #category : #movement }
 OpenToDo >> markAsFinished: aToDo [
 
