@@ -50,11 +50,6 @@ ToDo class >> describedBy: aDescription [
 	^ self new describedBy: aDescription
 ]
 
-{ #category : #movement }
-ToDo class >> markAsFinishedWhenIsInProgress [
-	self shouldBeImplemented.
-]
-
 { #category : #assertions }
 ToDo >> assertIsAssigned [
 
@@ -86,6 +81,12 @@ ToDo >> describedBy: aDescription [
 
 	description := aDescription.
 	state := OpenToDo new
+]
+
+{ #category : #'as yet unclassified' }
+ToDo >> isFinished [
+
+	^ state isFinished
 ]
 
 { #category : #movement }

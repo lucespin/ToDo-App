@@ -1,11 +1,11 @@
 Class {
-	#name : #ToDoTests,
+	#name : #ToDoTest,
 	#superclass : #TestCase,
 	#category : #'ToDoApp-Tests'
 }
 
 { #category : #tests }
-ToDoTests >> testAssignTo [
+ToDoTest >> testAssignTo [
 
 	| aToDo |
 
@@ -19,7 +19,7 @@ ToDoTests >> testAssignTo [
 ]
 
 { #category : #tests }
-ToDoTests >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
+ToDoTest >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
 
 	| aToDo |
 
@@ -37,7 +37,7 @@ ToDoTests >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
 ]
 
 { #category : #tests }
-ToDoTests >> testCreateAToDoWithoutDescriptionShouldFaild [
+ToDoTest >> testCreateAToDoWithoutDescriptionShouldFaild [
 
 	self
 		should: [ ToDo describedBy: nil ]
@@ -46,7 +46,7 @@ ToDoTests >> testCreateAToDoWithoutDescriptionShouldFaild [
 ]
 
 { #category : #tests }
-ToDoTests >> testMarkAsFinishedIfToDoIsOpenShouldFail [
+ToDoTest >> testMarkAsFinishedIfToDoIsOpenShouldFail [
 
 	| aToDo |
 
@@ -61,7 +61,7 @@ ToDoTests >> testMarkAsFinishedIfToDoIsOpenShouldFail [
 ]
 
 { #category : #tests }
-ToDoTests >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
+ToDoTest >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 
 	| aToDo |
 
