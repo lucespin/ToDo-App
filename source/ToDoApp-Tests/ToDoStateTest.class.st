@@ -87,7 +87,7 @@ ToDoStateTest >> testAssignAnEmployeeToAnInprogressToDoShouldFail [
 ]
 
 { #category : #tests }
-ToDoStateTest >> testWhenAFinishedToDoIsMarkedAsFinishedThenNotChange [
+ToDoStateTest >> testWhenAFinishedToDoIsMarkedAsFinishedThenIsFinished [
 
 	| aToDo |
 
@@ -97,8 +97,6 @@ ToDoStateTest >> testWhenAFinishedToDoIsMarkedAsFinishedThenNotChange [
 		assignTo: 'Dexter';
 		markAsInProgress;
 		markAsFinished.
-
-	self assert: aToDo isFinished.
 
 	FinishedToDo new markAsFinished: aToDo.
 
