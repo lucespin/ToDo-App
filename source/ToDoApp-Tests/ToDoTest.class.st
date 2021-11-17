@@ -141,3 +141,20 @@ ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
 	self deny: donate isOpen.
 	self deny: donate isFinished
 ]
+
+{ #category : #tests }
+ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
+
+	| donate |
+
+	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
+	donate
+		assignTo: 'Aye';
+		markAsInProgress;
+		markAsInProgress.
+
+	self assert: donate isInProgress.
+
+	self deny: donate isOpen.
+	self deny: donate isFinished
+]
