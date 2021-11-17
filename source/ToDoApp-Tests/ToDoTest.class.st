@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #tests }
-ToDoTest >> testAssignTo [
+ToDoTest >> testAssignAToDoToAnEmployee [
 
 	| aToDo |
 
@@ -16,24 +16,6 @@ ToDoTest >> testAssignTo [
 	aToDo
 		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee equals: 'Dexter' ]
 		ifNone: [ self fail ]
-]
-
-{ #category : #tests }
-ToDoTest >> testAssignToAnEmployeeIfToDoIsFinishedShouldFaild [
-
-	| aToDo |
-
-	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
-
-	aToDo
-		assignTo: 'Dexter';
-		markAsInProgress;
-		markAsFinished.
-
-	self
-		should: [ aToDo assignTo: 'Debora' ]
-		raise: AssertionFailed
-		withMessageText: 'A finished ToDo can''t be reassigned'
 ]
 
 { #category : #tests }
@@ -71,4 +53,22 @@ ToDoTest >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 		should: [ aToDo markAsInProgress ]
 		raise: AssertionFailed
 		withMessageText: 'An in-progress ToDo must be assigned'
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenAFinishedToDoIsAssignedToAnEmployeeThenShouldFail [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
+
+	aToDo
+		assignTo: 'Dexter';
+		markAsInProgress;
+		markAsFinished.
+
+	self
+		should: [ aToDo assignTo: 'Debora' ]
+		raise: AssertionFailed
+		withMessageText: 'A finished ToDo can''t be reassigned'
 ]
