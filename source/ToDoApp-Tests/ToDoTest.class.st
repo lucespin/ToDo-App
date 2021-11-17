@@ -15,7 +15,7 @@ ToDoTest >> testAssignAToDoToAnEmployee [
 
 	aToDo
 		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee equals: 'Dexter' ]
-		ifNone: [ self fail ]
+		ifNone: [ self assert: false ]
 ]
 
 { #category : #tests }
