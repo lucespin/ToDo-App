@@ -32,6 +32,24 @@ ToDoState >> assign: aToDo to: anEmployee [
 	self subclassResponsibility 
 ]
 
+{ #category : #boolean }
+ToDoState >> isFinished [
+
+	self subclassResponsibility
+]
+
+{ #category : #boolean }
+ToDoState >> isInProgress [
+
+	self subclassResponsibility 
+]
+
+{ #category : #boolean }
+ToDoState >> isOpen [
+
+	self subclassResponsibility
+]
+
 { #category : #'instance creation' }
 ToDoState >> markAsFinished: aToDo [
  

@@ -15,6 +15,60 @@ ToDoStateTest >> setUp [
 ]
 
 { #category : #tests }
+ToDoStateTest >> testAFinishedToDoIsFinished [
+
+	self assert: FinishedToDo new isFinished 
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAFinishedToDoIsNotInProgress [
+
+	self deny: FinishedToDo new isInProgress
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAFinishedToDoIsNotOpen [
+
+	self deny: FinishedToDo new isOpen
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAnInProgressToDoIsInProgress [
+
+	self assert: InProgressToDo new isInProgress
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAnInProgressToDoIsNotFinished [
+
+	self deny: InProgressToDo new isFinished
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAnInProgressToDoIsNotOpen [
+
+	self deny: InProgressToDo new isOpen
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAnOpenToDoIsNotFinished [
+
+	self deny: OpenToDo new isFinished
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAnOpenToDoIsNotInProgress [
+
+	self deny: OpenToDo new isInProgress
+]
+
+{ #category : #tests }
+ToDoStateTest >> testAnOpenToDoIsOpen [
+
+	self assert: OpenToDo new isOpen
+]
+
+{ #category : #tests }
 ToDoStateTest >> testAssignAnEmployeeToAFinishedToDoShouldFail [
 
 	self

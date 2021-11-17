@@ -92,6 +92,18 @@ ToDo >> isFinished [
 	^ state isFinished
 ]
 
+{ #category : #boolean }
+ToDo >> isInProgress [
+
+	^ state isInProgress
+]
+
+{ #category : #boolean }
+ToDo >> isOpen [
+
+	^ state isOpen
+]
+
 { #category : #movement }
 ToDo >> markAsFinished [
 
