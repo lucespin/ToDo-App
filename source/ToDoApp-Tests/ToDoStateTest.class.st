@@ -102,3 +102,19 @@ ToDoStateTest >> testWhenAFinishedToDoIsMarkedAsFinishedThenIsFinished [
 
 	self assert: aToDo isFinished
 ]
+
+{ #category : #tests }
+ToDoStateTest >> testWhenAnInProgressToDoIsMarkedAsFinishedThenIsFinished [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Preparar equipo'.
+
+	aToDo
+		assignTo: 'Dexter';
+		markAsInProgress.
+		
+	InProgressToDo new markAsFinished: aToDo.
+
+	self assert: aToDo isFinished.
+]
