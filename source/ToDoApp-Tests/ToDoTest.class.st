@@ -76,6 +76,43 @@ ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
 ]
 
 { #category : #tests }
+ToDoTest >> testCreateAToDoWithDescription [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Correr 3km'.
+
+	self assert: aToDo description equals: 'Correr 3km'
+]
+
+{ #category : #tests }
+ToDoTest >> testCreateAToDoWithStartDate [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Correr 3km' withStartDate: (Date year: 2021 month: 11 day: 21).
+
+	aToDo
+		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
+		ifNone: [self assert: false]
+]
+
+{ #category : #tests }
+ToDoTest >> testCreateAToDoWithStartDateAfterCompletionDateShouldFail [
+
+	| aToDo |
+
+	self
+		should: [aToDo := ToDo
+				describedBy: 'Algo'
+				withStartDate: (Date year: 2021 month: 11 day: 21)
+				andCompletionDate: (Date year: 2021 month: 11 day: 11)
+			]
+		raise: AssertionFailed
+		description: 'A completion date must be after the start date'
+]
+
+{ #category : #tests }
 ToDoTest >> testCreateAToDoWithStartDateAndCompletionDate [
 
 	| aToDo |
@@ -185,32 +222,26 @@ ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
 { #category : #tests }
 ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
 
-	| donate |
-
-	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
-	donate
+	writePrologue
 		assignTo: 'Aye';
 		markAsInProgress.
 
-	self assert: donate isInProgress.
+	self assert: writePrologue isInProgress.
 
-	self deny: donate isOpen.
-	self deny: donate isFinished
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isFinished
 ]
 
 { #category : #tests }
 ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
 
-	| donate |
-
-	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
-	donate
-		assignTo: 'Aye';
+	writePrologue
+		assignTo: 'Jorge Luis Borges';
 		markAsInProgress;
 		markAsInProgress.
 
-	self assert: donate isInProgress.
+	self assert: writePrologue isInProgress.
 
-	self deny: donate isOpen.
-	self deny: donate isFinished
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isFinished
 ]

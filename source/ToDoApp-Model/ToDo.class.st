@@ -52,7 +52,13 @@ ToDo class >> describedBy: aDescription [
 
 	self assertDescriptionIsNotEmpty: aDescription.
 
-	^ self new describedBy: aDescription
+	^ self new initializeDescribedBy: aDescription
+]
+
+{ #category : #'instance creation' }
+ToDo class >> describedBy: aDescription withStartDate: aDate [ 
+
+	^self new initializeDescribedBy: aDescription withStartDate: aDate
 ]
 
 { #category : #'Instance creation' }
@@ -99,17 +105,25 @@ ToDo >> changeToFinishedWhenIsInProgress [
 	state := FinishedToDo new.
 ]
 
+{ #category : #accessing }
+ToDo >> description [
+
+	^ description
+]
+
 { #category : #initialization }
-ToDo >> describedBy: aDescription [ 
+ToDo >> initializeDescribedBy: aDescription [ 
 
 	description := aDescription.
 	state := OpenToDo new
 ]
 
-{ #category : #accessing }
-ToDo >> description [
+{ #category : #initialization }
+ToDo >> initializeDescribedBy: aDescription withStartDate: aDate [ 
 
-	^ description
+	description := aDescription.
+	possibleStartDate := aDate.
+	state := OpenToDo new
 ]
 
 { #category : #initialization }
