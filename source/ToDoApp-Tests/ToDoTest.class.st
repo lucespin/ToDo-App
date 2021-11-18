@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 ToDoTest >> setUp [
 
-	writePrologue := ToDo describedBy: 'Write the prologue of Funes, el memorioso.'
+	writePrologue := ToDo describedBy: 'Write the prologue of Funes, el memorioso'
 ]
 
 { #category : #tests }
@@ -76,6 +76,25 @@ ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
 ]
 
 { #category : #tests }
+ToDoTest >> testCreateAToDoWithStartDateAndCompletionDate [
+
+	| aToDo |
+
+	aToDo := ToDo
+		describedBy: 'Darle mantenimiento a los filtros'
+		withStartDate: (Date year: 2021 month: 11 day: 21)
+		andCompletionDate: (Date year: 2021 month: 11 day: 25).
+
+	aToDo
+		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
+		ifNone: [self assert: false].
+		
+	aToDo
+		withCompletionDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 25)]
+		ifNone: [self assert: false]
+]
+
+{ #category : #tests }
 ToDoTest >> testMarkAsFinishedAnOpenToDoShouldFail [
 
 	| aToDo |
@@ -101,6 +120,28 @@ ToDoTest >> testMarkAsInProgressIfToDoIsNotAssignedShouldFail [
 		should: [ aToDo markAsInProgress ]
 		raise: AssertionFailed
 		withMessageText: 'ToDo not assigned'
+]
+
+{ #category : #tests }
+ToDoTest >> testPrintOnAStream [
+
+	| aToDo |
+
+	aToDo := ToDo
+		describedBy: 'Iniciar proceso de registro'
+		withStartDate: (Date year: 2021 month: 3 day: 5)
+		andCompletionDate: (Date year: 2021 month: 3 day: 10).
+
+	self
+		assert: aToDo printString
+		equals:
+			'a ToDo with description: Iniciar proceso de registro. Assigned employee: unassigned. Start date: 5 March 2021. Completion date: 10 March 2021.'.
+
+	aToDo assignTo: 'Carla'.
+	self
+		assert: aToDo printString
+		equals:
+			'a ToDo with description: Iniciar proceso de registro. Assigned employee: Carla. Start date: 5 March 2021. Completion date: 10 March 2021.'
 ]
 
 { #category : #tests }

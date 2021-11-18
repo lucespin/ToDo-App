@@ -31,12 +31,14 @@ Class {
 	#instVars : [
 		'description',
 		'state',
-		'possibleAssignedEmployee'
+		'possibleAssignedEmployee',
+		'possibleStartDate',
+		'possibleCompletionDate'
 	],
 	#category : #'ToDoApp-Model'
 }
 
-{ #category : #assertions }
+{ #category : #'private - asserting' }
 ToDo class >> assertDescriptionIsNotEmpty: aDescription [
 
 	AssertionChecker
@@ -51,6 +53,24 @@ ToDo class >> describedBy: aDescription [
 	self assertDescriptionIsNotEmpty: aDescription.
 
 	^ self new describedBy: aDescription
+]
+
+{ #category : #'Instance creation' }
+ToDo class >> describedBy: aDescription withStartDate: aStarDate andCompletionDate: aCompletionDate [
+
+	^ self new
+		initializeDescribedBy: aDescription
+		withStartDate: aStarDate
+		andCompletionDate: aCompletionDate
+]
+
+{ #category : #'private - asserting' }
+ToDo >> assert: aStarDate isPreviousTo: aCompletionDate [
+
+	AssertionChecker
+		enforce: [aStarDate isOnOrBefore: aCompletionDate]
+		because: 'A completion date must be after the start date'
+		raising: AssertionFailed
 ]
 
 { #category : #'private - asserting' }
@@ -86,6 +106,23 @@ ToDo >> describedBy: aDescription [
 	state := OpenToDo new
 ]
 
+{ #category : #accessing }
+ToDo >> description [
+
+	^ description
+]
+
+{ #category : #initialization }
+ToDo >> initializeDescribedBy: aDescription withStartDate: aStartDate andCompletionDate: aCompletionDate [
+
+	self assert: aStartDate isPreviousTo: aCompletionDate.
+	
+	description := aDescription.
+	possibleStartDate := aStartDate .
+	possibleCompletionDate := aCompletionDate.
+	state := OpenToDo new
+]
+
 { #category : #boolean }
 ToDo >> isFinished [
 
@@ -118,8 +155,45 @@ ToDo >> markAsInProgress [
 	state := InProgressToDo new.
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
+ToDo >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream nextPutAll: ' with description: '; 
+	nextPutAll: description.
+	aStream nextPutAll: '. Assigned employee: '.
+	self
+		withAssignedEmployeeDo: [:employee | aStream nextPutAll: employee]
+		ifNone: [aStream nextPutAll: 'unassigned'].
+	aStream nextPutAll: '. Start date: '.
+	self withStartDateDo: [:date | date printOn: aStream] ifNone: [aStream nextPutAll: 'unassigned'].
+	aStream nextPutAll: '. Completion date: '.
+	self
+		withCompletionDateDo: [:date | date printOn: aStream]
+		ifNone: [aStream nextPutAll: 'unassigned'].
+	aStream nextPut: $.
+]
+
+{ #category : #'private - utility' }
+ToDo >> with: anAttribute do: aMonadycBlock ifNone: aNoneBlock [
+
+	^ anAttribute ifNil: aNoneBlock ifNotNil: aMonadycBlock
+]
+
+{ #category : #movement }
 ToDo >> withAssignedEmployeeDo: anAssignedEmployeeBlock ifNone: aNoneBlock [
 
-	^ possibleAssignedEmployee ifNil: aNoneBlock ifNotNil: anAssignedEmployeeBlock
+	^ self with: possibleAssignedEmployee do: anAssignedEmployeeBlock ifNone: aNoneBlock
+]
+
+{ #category : #movement }
+ToDo >> withCompletionDateDo: aMonadycBlock ifNone: aNoneBlock [
+
+	^ self with: possibleCompletionDate do: aMonadycBlock ifNone: aNoneBlock
+]
+
+{ #category : #movement }
+ToDo >> withStartDateDo: aDateBlock ifNone: aNoneBlock [ 
+	
+	^ self with: possibleStartDate do: aDateBlock ifNone: aNoneBlock
 ]
