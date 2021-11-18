@@ -86,6 +86,18 @@ ToDoTest >> testCreateAToDoWithDescription [
 ]
 
 { #category : #tests }
+ToDoTest >> testCreateAToDoWithStartDate [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Correr 3km' withStartDate: (Date year: 2021 month: 11 day: 21).
+
+	aToDo
+		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
+		ifNone: [self assert: false]
+]
+
+{ #category : #tests }
 ToDoTest >> testCreateAToDoWithStartDateAndCompletionDate [
 
 	| aToDo |

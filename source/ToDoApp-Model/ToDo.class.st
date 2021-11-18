@@ -55,6 +55,12 @@ ToDo class >> describedBy: aDescription [
 	^ self new describedBy: aDescription
 ]
 
+{ #category : #'instance creation' }
+ToDo class >> describedBy: aDescription withStartDate: aDate [ 
+
+	^self new initializeDescribedBy: aDescription withStartDate: aDate
+]
+
 { #category : #'Instance creation' }
 ToDo class >> describedBy: aDescription withStartDate: aStarDate andCompletionDate: aCompletionDate [
 
@@ -110,6 +116,14 @@ ToDo >> describedBy: aDescription [
 ToDo >> description [
 
 	^ description
+]
+
+{ #category : #initialization }
+ToDo >> initializeDescribedBy: aDescription withStartDate: aDate [ 
+
+	description := aDescription.
+	possibleStartDate := aDate.
+	state := OpenToDo new
 ]
 
 { #category : #initialization }
