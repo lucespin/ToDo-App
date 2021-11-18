@@ -98,6 +98,21 @@ ToDoTest >> testCreateAToDoWithStartDate [
 ]
 
 { #category : #tests }
+ToDoTest >> testCreateAToDoWithStartDateAfterCompletionDateShouldFail [
+
+	| aToDo |
+
+	self
+		should: [aToDo := ToDo
+				describedBy: 'Algo'
+				withStartDate: (Date year: 2021 month: 11 day: 21)
+				andCompletionDate: (Date year: 2021 month: 11 day: 11)
+			]
+		raise: AssertionFailed
+		description: 'A completion date must be after the start date'
+]
+
+{ #category : #tests }
 ToDoTest >> testCreateAToDoWithStartDateAndCompletionDate [
 
 	| aToDo |
