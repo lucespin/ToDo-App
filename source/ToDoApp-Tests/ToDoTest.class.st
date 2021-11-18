@@ -76,6 +76,16 @@ ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
 ]
 
 { #category : #tests }
+ToDoTest >> testCreateAToDoWithDescription [
+
+	| aToDo |
+
+	aToDo := ToDo describedBy: 'Correr 3km'.
+
+	self assert: aToDo description equals: 'Correr 3km'
+]
+
+{ #category : #tests }
 ToDoTest >> testCreateAToDoWithStartDateAndCompletionDate [
 
 	| aToDo |
@@ -185,32 +195,26 @@ ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
 { #category : #tests }
 ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
 
-	| donate |
-
-	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
-	donate
+	writePrologue
 		assignTo: 'Aye';
 		markAsInProgress.
 
-	self assert: donate isInProgress.
+	self assert: writePrologue isInProgress.
 
-	self deny: donate isOpen.
-	self deny: donate isFinished
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isFinished
 ]
 
 { #category : #tests }
 ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
 
-	| donate |
-
-	donate := ToDo describedBy: 'Donate to the cause of Santi Maratea'.
-	donate
-		assignTo: 'Aye';
+	writePrologue
+		assignTo: 'Jorge Luis Borges';
 		markAsInProgress;
 		markAsInProgress.
 
-	self assert: donate isInProgress.
+	self assert: writePrologue isInProgress.
 
-	self deny: donate isOpen.
-	self deny: donate isFinished
+	self deny: writePrologue isOpen.
+	self deny: writePrologue isFinished
 ]
