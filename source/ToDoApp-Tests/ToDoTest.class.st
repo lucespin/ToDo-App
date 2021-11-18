@@ -76,6 +76,25 @@ ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
 ]
 
 { #category : #tests }
+ToDoTest >> testCreateAToDoWithCompletionDateOnStartDate [
+
+	| aToDo |
+
+	aToDo := ToDo
+		describedBy: 'Darle mantenimiento a los filtros'
+		withStartDate: (Date year: 2021 month: 11 day: 21)
+		andCompletionDate: (Date year: 2021 month: 11 day: 21).
+
+	aToDo
+		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
+		ifNone: [self assert: false].
+		
+	aToDo
+		withCompletionDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
+		ifNone: [self assert: false]
+]
+
+{ #category : #tests }
 ToDoTest >> testCreateAToDoWithDescription [
 
 	| aToDo |
@@ -95,21 +114,6 @@ ToDoTest >> testCreateAToDoWithStartDate [
 	aToDo
 		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
 		ifNone: [self assert: false]
-]
-
-{ #category : #tests }
-ToDoTest >> testCreateAToDoWithStartDateAfterCompletionDateShouldFail [
-
-	| aToDo |
-
-	self
-		should: [aToDo := ToDo
-				describedBy: 'Algo'
-				withStartDate: (Date year: 2021 month: 11 day: 21)
-				andCompletionDate: (Date year: 2021 month: 11 day: 11)
-			]
-		raise: AssertionFailed
-		description: 'A completion date must be after the start date'
 ]
 
 { #category : #tests }
@@ -185,7 +189,17 @@ ToDoTest >> testPrintOnAStream [
 ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 
 	self
-		should: [ ToDo describedBy: '' ]
+		should: [ToDo describedBy: '']
+		raise: InstanceCreationFailed
+		withMessageText: 'A ToDo must have a description.'.
+
+	self
+		should: [ToDo describedBy: '' withStartDate: Date today]
+		raise: InstanceCreationFailed
+		withMessageText: 'A ToDo must have a description.'.
+
+	self
+		should: [ToDo describedBy: '' withStartDate: Date today andCompletionDate: Date today]
 		raise: InstanceCreationFailed
 		withMessageText: 'A ToDo must have a description.'
 ]
@@ -244,4 +258,17 @@ ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
 
 	self deny: writePrologue isOpen.
 	self deny: writePrologue isFinished
+]
+
+{ #category : #tests }
+ToDoTest >> testWhenStartDateIsAfterCompletionDateThenToDoCreationShouldFail [
+
+	self
+		should: [ToDo
+				describedBy: 'Algo'
+				withStartDate: (Date year: 2021 month: 11 day: 21)
+				andCompletionDate: (Date year: 2021 month: 11 day: 11)
+			]
+		raise: InstanceCreationFailed
+		description: 'A completion date must be after the start date'
 ]
