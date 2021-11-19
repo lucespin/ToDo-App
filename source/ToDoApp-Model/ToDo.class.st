@@ -39,6 +39,15 @@ Class {
 }
 
 { #category : #'private - asserting' }
+ToDo class >> assert: aStarDate isPreviousTo: aCompletionDate [
+
+	AssertionChecker
+		enforce: [aStarDate isOnOrBefore: aCompletionDate]
+		because: 'A completion date must be after the start date'
+		raising: InstanceCreationFailed
+]
+
+{ #category : #'private - asserting' }
 ToDo class >> assertDescriptionIsNotEmpty: aDescription [
 
 	AssertionChecker
@@ -56,27 +65,23 @@ ToDo class >> describedBy: aDescription [
 ]
 
 { #category : #'instance creation' }
-ToDo class >> describedBy: aDescription withStartDate: aDate [ 
+ToDo class >> describedBy: aDescription withStartDate: aDate [
 
-	^self new initializeDescribedBy: aDescription withStartDate: aDate
+	self assertDescriptionIsNotEmpty: aDescription.
+
+	^ self new initializeDescribedBy: aDescription withStartDate: aDate
 ]
 
-{ #category : #'Instance creation' }
+{ #category : #'instance creation' }
 ToDo class >> describedBy: aDescription withStartDate: aStarDate andCompletionDate: aCompletionDate [
+
+	self assertDescriptionIsNotEmpty: aDescription.
+	self assert: aStarDate isPreviousTo: aCompletionDate.
 
 	^ self new
 		initializeDescribedBy: aDescription
 		withStartDate: aStarDate
 		andCompletionDate: aCompletionDate
-]
-
-{ #category : #'private - asserting' }
-ToDo >> assert: aStarDate isPreviousTo: aCompletionDate [
-
-	AssertionChecker
-		enforce: [aStarDate isOnOrBefore: aCompletionDate]
-		because: 'A completion date must be after the start date'
-		raising: AssertionFailed
 ]
 
 { #category : #'private - asserting' }
@@ -128,8 +133,6 @@ ToDo >> initializeDescribedBy: aDescription withStartDate: aDate [
 
 { #category : #initialization }
 ToDo >> initializeDescribedBy: aDescription withStartDate: aStartDate andCompletionDate: aCompletionDate [
-
-	self assert: aStartDate isPreviousTo: aCompletionDate.
 	
 	description := aDescription.
 	possibleStartDate := aStartDate .
