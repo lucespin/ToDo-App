@@ -186,6 +186,28 @@ ToDoTest >> testPrintOnAStream [
 ]
 
 { #category : #tests }
+ToDoTest >> testSetACompletionDateBeforeStartDateShouldFail [
+
+	writePrologue setStartDateTo: Date today.
+
+	self
+		should: [writePrologue setCompletionDateTo: Date yesterday]
+		raise: AssertionFailed
+		description: 'A completion date must be after the start date'
+]
+
+{ #category : #tests }
+ToDoTest >> testSetAStartDateAfterCompletionDateShouldFail [
+
+	writePrologue setCompletionDateTo: Date yesterday.
+
+	self
+		should: [writePrologue setStartDateTo: Date today]
+		raise: AssertionFailed
+		description: 'A completion date must be after the start date'
+]
+
+{ #category : #tests }
 ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 
 	self
@@ -266,9 +288,8 @@ ToDoTest >> testWhenStartDateIsAfterCompletionDateThenToDoCreationShouldFail [
 	self
 		should: [ToDo
 				describedBy: 'Algo'
-				withStartDate: (Date year: 2021 month: 11 day: 21)
-				andCompletionDate: (Date year: 2021 month: 11 day: 11)
-			]
+				withStartDate: Date today
+				andCompletionDate: Date yesterday 			]
 		raise: InstanceCreationFailed
 		description: 'A completion date must be after the start date'
 ]

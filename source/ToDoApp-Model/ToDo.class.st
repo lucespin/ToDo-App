@@ -39,15 +39,6 @@ Class {
 }
 
 { #category : #'private - asserting' }
-ToDo class >> assert: aStarDate isPreviousTo: aCompletionDate [
-
-	AssertionChecker
-		enforce: [aStarDate isOnOrBefore: aCompletionDate]
-		because: 'A completion date must be after the start date'
-		raising: InstanceCreationFailed
-]
-
-{ #category : #'private - asserting' }
 ToDo class >> assertDescriptionIsNotEmpty: aDescription [
 
 	AssertionChecker
@@ -73,15 +64,23 @@ ToDo class >> describedBy: aDescription withStartDate: aDate [
 ]
 
 { #category : #'instance creation' }
-ToDo class >> describedBy: aDescription withStartDate: aStarDate andCompletionDate: aCompletionDate [
+ToDo class >> describedBy: aDescription withStartDate: aStartDate andCompletionDate: aCompletionDate [
 
 	self assertDescriptionIsNotEmpty: aDescription.
-	self assert: aStarDate isPreviousTo: aCompletionDate.
 
 	^ self new
 		initializeDescribedBy: aDescription
-		withStartDate: aStarDate
+		withStartDate: aStartDate
 		andCompletionDate: aCompletionDate
+]
+
+{ #category : #'private - asserting' }
+ToDo >> assert: aStarDate isOnOrPreviousTo: aCompletionDate ifNotRaise: errorToSignal [
+
+	AssertionChecker
+		enforce: [aStarDate isOnOrBefore: aCompletionDate]
+		because: 'A completion date must be after the start date'
+		raising: errorToSignal
 ]
 
 { #category : #'private - asserting' }
@@ -133,9 +132,11 @@ ToDo >> initializeDescribedBy: aDescription withStartDate: aDate [
 
 { #category : #initialization }
 ToDo >> initializeDescribedBy: aDescription withStartDate: aStartDate andCompletionDate: aCompletionDate [
-	
+
+	self assert: aStartDate isOnOrPreviousTo: aCompletionDate ifNotRaise: InstanceCreationFailed.
+
 	description := aDescription.
-	possibleStartDate := aStartDate .
+	possibleStartDate := aStartDate.
 	possibleCompletionDate := aCompletionDate.
 	state := OpenToDo new
 ]
@@ -189,6 +190,25 @@ ToDo >> printOn: aStream [
 		withCompletionDateDo: [:date | date printOn: aStream]
 		ifNone: [aStream nextPutAll: 'unassigned'].
 	aStream nextPut: $.
+]
+
+{ #category : #setting }
+ToDo >> setCompletionDateTo: aDate [
+
+	self
+		withStartDateDo: [:startDate | self assert: startDate isOnOrPreviousTo: aDate ifNotRaise: AssertionFailed]
+		ifNone: [].
+	possibleCompletionDate := aDate
+]
+
+{ #category : #setting }
+ToDo >> setStartDateTo: aDate [
+
+	self
+		withCompletionDateDo: [:completionDate | self assert: aDate isOnOrPreviousTo: completionDate ifNotRaise: AssertionFailed]
+		ifNone: [].
+
+	possibleStartDate := aDate
 ]
 
 { #category : #'private - utility' }
