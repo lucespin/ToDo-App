@@ -39,10 +39,23 @@ Category class >> named: aName [
 	^ Category new initializeNamed: aName
 ]
 
+{ #category : #movement }
+Category >> categorize: aToDo [ 
+
+	toDos add: aToDo
+]
+
 { #category : #initialization }
 Category >> initializeNamed: aName [
 	
-	name := aName
+	name := aName.	
+	toDos := OrderedCollection new
+]
+
+{ #category : #boolean }
+Category >> isCategorizing: aToDo [
+
+	^ toDos includes: aToDo
 ]
 
 { #category : #accesing }

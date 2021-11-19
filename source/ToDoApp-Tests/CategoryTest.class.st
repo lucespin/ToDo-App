@@ -29,6 +29,24 @@ Class {
 	#category : #'ToDoApp-Tests'
 }
 
+{ #category : #running }
+CategoryTest >> setUp [
+
+	aToDo := ToDo describedBy: 'Calibrar telescopio'
+]
+
+{ #category : #tests }
+CategoryTest >> testCategorizeAToDo [
+
+	| category |
+
+	category := Category named: 'Enhancement'.
+
+	category categorize: aToDo.
+
+	self assert: (category isCategorizing: aToDo)
+]
+
 { #category : #tests }
 CategoryTest >> testCreateACategoryWithAName [
 
