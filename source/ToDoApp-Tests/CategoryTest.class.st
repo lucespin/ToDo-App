@@ -23,11 +23,14 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #CategoryTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'aToDo'
+	],
 	#category : #'ToDoApp-Tests'
 }
 
 { #category : #tests }
-CategoryTest >> testACategoryHaveAName [
+CategoryTest >> testCreateACategoryWithAName [
 
 	| category |
 
