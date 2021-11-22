@@ -289,7 +289,7 @@ ToDoTest >> testWhenStartDateIsAfterCompletionDateThenToDoCreationShouldFail [
 		should: [ToDo
 				describedBy: 'Algo'
 				withStartDate: Date today
-				andCompletionDate: Date yesterday 			]
+				andCompletionDate: Date yesterday]
 		raise: InstanceCreationFailed
 		description: 'A completion date must be after the start date'
 ]
