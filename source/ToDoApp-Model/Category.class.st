@@ -63,3 +63,9 @@ Category >> name [
 
 	^ name
 ]
+
+{ #category : #movement }
+Category >> removeCategoryTo: aToDo [ 
+	
+	toDos remove: aToDo
+]

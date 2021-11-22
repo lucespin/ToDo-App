@@ -56,3 +56,19 @@ CategoryTest >> testCreateACategoryWithAName [
 
 	self assert: category name equals: 'Enhancement'
 ]
+
+{ #category : #tests }
+CategoryTest >> testRemoveCategoryToAToDo [
+
+	| category |
+
+	category := Category named: 'Enhancement'.
+
+	category categorize: aToDo.
+
+	self assert: (category isCategorizing: aToDo).
+
+	category removeCategoryTo: aToDo.
+
+	self deny: (category isCategorizing: aToDo)
+]
