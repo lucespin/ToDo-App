@@ -21,28 +21,28 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #ToDoAppTableWebView,
+	#name : #ToDosWebView,
 	#superclass : #WAPainter,
 	#category : #'ToDoApp-Application'
 }
 
 { #category : #adding }
-ToDoAppTableWebView >> addColumnTitled: aTitle rendering: aRenderingCommand [
+ToDosWebView >> addColumnTitled: aTitle rendering: aRenderingCommand [
 
 	^ [ :column | 
-	column
-		titled: aTitle applying: [ :title | title setStyleTo: self titleStyle ];
-		rendering: aRenderingCommand;
-		applyingToEachCell: [ :cell | cell setStyleTo: [ :style | style padding: 8 px ] ]
-	]
+	  column
+		  titled: aTitle applying: [ :title | title setStyleTo: self titleStyle ];
+		  rendering: aRenderingCommand;
+		  applyingToEachCell: [ :cell | cell setStyleTo: [ :style | style padding: 8 px ] ]
+	  ]
 ]
 
 { #category : #rendering }
-ToDoAppTableWebView >> renderContentOn: aCanvas [
+ToDosWebView >> renderContentOn: aCanvas [
 
 	| toDosTable |
 
-	toDosTable := TableWebViewBuilder new
+	toDosTable := self componentSupplier tableBuilder
 		addColumn: (self addColumnTitled: 'Start Date' rendering: [ '23/10/2021' "*"]);
 		addColumn: (self addColumnTitled: 'Description' rendering: [ 'Hacer preparativos' "*"]);
 		addColumn: (self addColumnTitled: 'Completion Date' rendering: [ '19/05/2022' "*"]);
@@ -58,13 +58,13 @@ ToDoAppTableWebView >> renderContentOn: aCanvas [
 ]
 
 { #category : #'Configuring - CSS' }
-ToDoAppTableWebView >> titleStyle [
+ToDosWebView >> titleStyle [
 
 	^ [ :style | 
-	style
-		color: 'white';
-		backgroundColor: '#8730FF';
-		textAlign: #center;
-		opacity: '90%'
-	]
+	  style
+		  color: 'white';
+		  backgroundColor: '#8730FF';
+		  textAlign: #center;
+		  opacity: '90%'
+	  ]
 ]

@@ -24,7 +24,7 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #CategoryRepository,
+	#name : #CategoriesRepository,
 	#superclass : #Object,
 	#instVars : [
 		'categories'
@@ -33,25 +33,26 @@ Class {
 }
 
 { #category : #movement }
-CategoryRepository >> add: aCategory [ 
+CategoriesRepository >> add: aCategory [ 
 	
 	categories add: aCategory
 ]
 
 { #category : #boolean }
-CategoryRepository >> contains: aCategory [
+CategoriesRepository >> contains: aCategory [
 
 	^ categories includes: aCategory
 ]
 
 { #category : #initialization }
-CategoryRepository >> initialize [
+CategoriesRepository >> initialize [
 
-	categories := OrderedCollection new.
+	super initialize.
+	categories := OrderedCollection new
 ]
 
 { #category : #movement }
-CategoryRepository >> remove: aCategory [
+CategoriesRepository >> remove: aCategory [
 
 	categories remove: aCategory
 ]
