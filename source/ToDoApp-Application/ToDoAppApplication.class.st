@@ -21,32 +21,38 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #ToDoAppPresentation,
+	#name : #ToDoAppApplication,
 	#superclass : #WillowApplication,
 	#category : #'ToDoApp-Application'
 }
 
 { #category : #accessing }
-ToDoAppPresentation class >> applicationTitle [
+ToDoAppApplication class >> applicationTitle [
 	
 	^ 'ToDo App'
 ]
 
 { #category : #accessing }
-ToDoAppPresentation class >> handlerName [
+ToDoAppApplication class >> handlerName [
 
 	^ 'todo'
 ]
 
 { #category : #accessing }
-ToDoAppPresentation class >> start [
+ToDoAppApplication class >> sessionClass [
+
+	^ ToDoAppSession
+]
+
+{ #category : #accessing }
+ToDoAppApplication class >> start [
 
 	(ZnZincServerAdaptor port: 8085) start.
 	self registerAsDevelopmentApplication
 ]
 
 { #category : #accessing }
-ToDoAppPresentation class >> stop [ 
+ToDoAppApplication class >> stop [ 
 
 	ZnServer stopDefault.
 	ZnZincServerAdaptor allInstancesDo: [ :each | each shutDown ].
@@ -55,25 +61,19 @@ ToDoAppPresentation class >> stop [
 ]
 
 { #category : #accessing }
-ToDoAppPresentation >> componentSupplierForApplication [
+ToDoAppApplication >> componentSupplierForApplication [
 
 	^ Bootstrap3ComponentSupplier online
 ]
 
 { #category : #accessing }
-ToDoAppPresentation >> contentView [
+ToDoAppApplication >> contentView [
 
-	^ self componentSupplier
-		divisionContainerWrapping: [ :aCanvas | 
-			aCanvas render: ToDoAppHeadingWebView new.
-			aCanvas render: ToDoAppTableWebView new
-		]
-		applying:
-			[ :div | div addClass bootstrap3 container + (div setStyleTo: [ :style | style fontSize: 125 percent ]) ]
+	^ self session applicationContext mainWebView
 ]
 
 { #category : #accessing }
-ToDoAppPresentation >> jQueryLibrary [
+ToDoAppApplication >> jQueryLibrary [
 
 	   ^ JQuery3OnlineLibrary default
 ]

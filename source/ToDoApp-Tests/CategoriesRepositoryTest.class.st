@@ -11,7 +11,7 @@ CategoriesRepositoryTest >> testAddACategoryToARepository [
 	
 	aCategory := Category named: 'Enhancement'.
 		
-	aCategoryRepository := CategoryRepository new.
+	aCategoryRepository := CategoriesRepository new.
 	
 	aCategoryRepository add: aCategory.
 	
@@ -25,7 +25,7 @@ CategoriesRepositoryTest >> testRemoveACategoryOfARepository [
 
 	aCategory := Category named: 'Enhancement'.
 
-	aCategoryRepository := CategoryRepository new.
+	aCategoryRepository := CategoriesRepository new.
 
 	aCategoryRepository add: aCategory.
 
