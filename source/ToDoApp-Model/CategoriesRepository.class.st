@@ -38,10 +38,10 @@ CategoriesRepository >> add: aCategory [
 	categories add: aCategory
 ]
 
-{ #category : #boolean }
-CategoriesRepository >> contains: aCategory [
+{ #category : #accessing }
+CategoriesRepository >> categories [
 
-	^ categories includes: aCategory
+	^ categories
 ]
 
 { #category : #initialization }
