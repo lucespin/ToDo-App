@@ -29,5 +29,5 @@ Class {
 { #category : #rendering }
 WelcomeWebView >> renderContentOn: aCanvas [
 
-	aCanvas render: ( HeadingWebView displaying: 'Welcome' withLevel: 2 )
+	aCanvas render: (ToDoAppHeadingWebView displaying: 'Welcome!').
 ]

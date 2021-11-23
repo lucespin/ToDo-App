@@ -23,8 +23,17 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #ToDoAppHeadingWebView,
 	#superclass : #WAPainter,
+	#instVars : [
+		'potentialTextToDisplay'
+	],
 	#category : #'ToDoApp-Application'
 }
+
+{ #category : #'as yet unclassified' }
+ToDoAppHeadingWebView class >> displaying: aPotentialText [
+
+	^ self new initializeDisplaying: aPotentialText
+]
 
 { #category : #'Configuring - CSS' }
 ToDoAppHeadingWebView >> headingStyle [
@@ -39,13 +48,19 @@ ToDoAppHeadingWebView >> headingStyle [
 	]
 ]
 
+{ #category : #initialization }
+ToDoAppHeadingWebView >> initializeDisplaying: aPotentialText [
+	
+	potentialTextToDisplay := aPotentialText
+]
+
 { #category : #rendering }
 ToDoAppHeadingWebView >> renderContentOn: aCanvas [
 
 	^ aCanvas
 		render:
 			(HeadingWebView
-				displaying: 'ToDo Application'
+				displaying: potentialTextToDisplay 
 				withLevel: 1
 				applying: [ :heading | heading setStyleTo: self headingStyle ])
 ]

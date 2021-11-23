@@ -29,7 +29,8 @@ Class {
 	#superclass : #WAPainter,
 	#instVars : [
 		'identifiedCurrentWebView',
-		'buttonsWebView'
+		'buttonsWebView',
+		'headingWebView'
 	],
 	#category : #'ToDoApp-Application'
 }
@@ -46,6 +47,7 @@ MainWebView >> initialize [
 	super initialize.
 	self
 		initializeButtonsWebView;
+		initializeHeadingWebView;
 		initializeIdentifiedCurrentWebView
 ]
 
@@ -53,6 +55,12 @@ MainWebView >> initialize [
 MainWebView >> initializeButtonsWebView [
 
 	buttonsWebView := ButtonsWebView new
+]
+
+{ #category : #initialization }
+MainWebView >> initializeHeadingWebView [
+
+	headingWebView := ToDoAppHeadingWebView displaying: 'ToDo Application'
 ]
 
 { #category : #initialization }
@@ -69,6 +77,13 @@ MainWebView >> initializeIdentifiedCurrentWebView [
 MainWebView >> renderContentOn: aCanvas [
 
 	aCanvas
-		render: buttonsWebView;
-		render: identifiedCurrentWebView
+		render:
+			(self componentSupplier
+				divisionContainerWrapping: [:canvas | 
+					canvas
+						render: headingWebView;
+						render: buttonsWebView;
+						render: identifiedCurrentWebView
+					]
+				applying: [:div | div addClass bootstrap3 container])
 ]
