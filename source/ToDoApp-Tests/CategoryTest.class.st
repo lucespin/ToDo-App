@@ -29,12 +29,6 @@ Class {
 	#category : #'ToDoApp-Tests'
 }
 
-{ #category : #running }
-CategoryTest >> setUp [
-
-	aToDo := ToDo describedBy: 'Calibrar telescopio'
-]
-
 { #category : #tests }
 CategoryTest >> testCategorizeAToDo [
 

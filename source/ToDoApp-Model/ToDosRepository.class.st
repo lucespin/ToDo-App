@@ -18,35 +18,41 @@ Public API and Key Messages
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	employees:		<Object>
+	toDos:		<Object>
 
 
     Implementation Points
 "
 Class {
-	#name : #EmployeesRepository,
+	#name : #ToDosRepository,
 	#superclass : #Object,
 	#instVars : [
-		'employees'
+		'toDos'
 	],
 	#category : #'ToDoApp-Model'
 }
 
-{ #category : #adding }
-EmployeesRepository >> addEmployee: anEmployee [
+{ #category : #movement }
+ToDosRepository >> addToDo: aToDo [
 
-	employees add: anEmployee
-]
-
-{ #category : #accessing }
-EmployeesRepository >> employees [
-
-	^ employees
+	toDos add: aToDo
 ]
 
 { #category : #initialization }
-EmployeesRepository >> initialize [
+ToDosRepository >> initialize [
 
 	super initialize.
-	employees := OrderedCollection new
+	toDos := OrderedCollection new
+]
+
+{ #category : #movement }
+ToDosRepository >> removeToDo: aToDo [ 
+	
+	toDos remove: aToDo
+]
+
+{ #category : #accessing }
+ToDosRepository >> toDos [
+
+	^ toDos
 ]

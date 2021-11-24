@@ -33,15 +33,15 @@ Class {
 }
 
 { #category : #movement }
-CategoriesRepository >> add: aCategory [ 
+CategoriesRepository >> addCategory: aCategory [ 
 	
 	categories add: aCategory
 ]
 
-{ #category : #boolean }
-CategoriesRepository >> contains: aCategory [
+{ #category : #accessing }
+CategoriesRepository >> categories [
 
-	^ categories includes: aCategory
+	^ categories
 ]
 
 { #category : #initialization }
@@ -52,7 +52,7 @@ CategoriesRepository >> initialize [
 ]
 
 { #category : #movement }
-CategoriesRepository >> remove: aCategory [
+CategoriesRepository >> removeCategory: aCategory [
 
 	categories remove: aCategory
 ]

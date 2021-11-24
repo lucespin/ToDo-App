@@ -8,14 +8,23 @@ Class {
 CategoriesRepositoryTest >> testAddACategoryToARepository [
 
 	| aCategory aCategoryRepository |
-	
-	aCategory := Category named: 'Enhancement'.
 		
 	aCategoryRepository := CategoriesRepository new.
 	
-	aCategoryRepository add: aCategory.
+	self assertEmpty: aCategoryRepository categories.
 	
-	self assert: (aCategoryRepository contains: aCategory)
+	aCategory := Category named: 'Enhancement'.
+	
+	aCategoryRepository addCategory: aCategory.
+
+	self withTheOnlyOneIn: aCategoryRepository categories
+		do: [ :storedCategory | self assert: storedCategory equals: aCategory ]
+]
+
+{ #category : #tests }
+CategoriesRepositoryTest >> testCategoriesRepositoryStartsEmpty [
+
+	self assertEmpty: CategoriesRepository new categories
 ]
 
 { #category : #tests }
@@ -23,15 +32,13 @@ CategoriesRepositoryTest >> testRemoveACategoryOfARepository [
 
 	| aCategory aCategoryRepository |
 
+	aCategoryRepository := CategoriesRepository new.
+	
 	aCategory := Category named: 'Enhancement'.
 
-	aCategoryRepository := CategoriesRepository new.
+	aCategoryRepository addCategory: aCategory.
 
-	aCategoryRepository add: aCategory.
+	aCategoryRepository removeCategory: aCategory.
 
-	self assert: (aCategoryRepository contains: aCategory).
-
-	aCategoryRepository remove: aCategory.
-
-	self deny: (aCategoryRepository contains: aCategory)
+	self assert: aCategoryRepository categories isEmpty 
 ]
