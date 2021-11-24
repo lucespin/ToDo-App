@@ -35,15 +35,18 @@ Class {
 { #category : #adding }
 ToDoAdditionWebView >> addToDo [
 
-	| toDoStartDate toDoDescription toDoCompletionDate toDo |
+	| toDoDescription toDo |
 
-	toDoStartDate := startDateField date.
 	toDoDescription := descriptionField model.
-	toDoCompletionDate := completionDateField date.
-	toDo := ToDo
-		describedBy: toDoDescription
-		withStartDate: toDoStartDate
-		andCompletionDate: toDoCompletionDate.
+	toDo := ToDo describedBy: toDoDescription.
+
+	startDateField contents
+		ifEmpty: []
+		ifNotEmpty: [:dateAsString | toDo setStartDateTo: (Date fromString: dateAsString)].
+
+	completionDateField contents
+		ifEmpty: []
+		ifNotEmpty: [:dateAsString | toDo setCompletionDateTo: (Date fromString: dateAsString)].
 
 	self session applicationContext addToDo: toDo
 ]
@@ -92,14 +95,12 @@ ToDoAdditionWebView >> initializeAdditionButton [
 { #category : #initialization }
 ToDoAdditionWebView >> initializeFields [
 
-	startDateField := self dateFieldWithPlaceholder: 'ToDo''s Start Date'.
-	startDateField on change serializeIt.
+	startDateField := self dateFieldWithPlaceholder: 'Start Date'.
 
 	descriptionField := self componentSupplier
 		singleLineTextFieldApplying: [:theField | theField setPlaceholderTo: 'Description'].
 
 	completionDateField := self dateFieldWithPlaceholder: 'Completion Date'.
-	completionDateField on change serializeIt.
 ]
 
 { #category : #rendering }

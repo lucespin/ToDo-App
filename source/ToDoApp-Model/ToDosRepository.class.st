@@ -45,7 +45,7 @@ ToDosRepository >> initialize [
 	toDos := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #movement }
 ToDosRepository >> removeToDo: aToDo [ 
 	
 	toDos remove: aToDo

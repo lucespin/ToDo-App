@@ -48,7 +48,7 @@ ToDoAppApplicationContext >> addEmployee: anEmployee [
 { #category : #accessing }
 ToDoAppApplicationContext >> addToDo: aToDo [
 
-	^ toDosRepository addTodo: aToDo
+	^ toDosRepository addToDo: aToDo
 ]
 
 { #category : #accessing }
@@ -100,7 +100,7 @@ ToDoAppApplicationContext >> mainWebView [
 ]
 
 { #category : #accessing }
-ToDoAppApplicationContext >> removeTodo: aToDo [
+ToDoAppApplicationContext >> removeToDo: aToDo [
 
 	^ toDosRepository removeToDo: aToDo
 ]
