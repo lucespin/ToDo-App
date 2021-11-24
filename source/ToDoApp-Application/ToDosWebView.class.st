@@ -115,7 +115,7 @@ ToDosWebView >> titleStyle [
 	^ [ :style | 
 	  style
 		  color: 'white';
-		  backgroundColor: '#8730FF';
+		  backgroundColor: '#7724FF';
 		  textAlign: #center;
 		  opacity: '90%'
 	  ]
