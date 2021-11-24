@@ -18,41 +18,41 @@ Public API and Key Messages
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	categories:		<Object>
+	toDos:		<Object>
 
 
     Implementation Points
 "
 Class {
-	#name : #CategoriesRepository,
+	#name : #ToDosRepository,
 	#superclass : #Object,
 	#instVars : [
-		'categories'
+		'toDos'
 	],
 	#category : #'ToDoApp-Model'
 }
 
 { #category : #movement }
-CategoriesRepository >> addCategory: aCategory [ 
-	
-	categories add: aCategory
-]
+ToDosRepository >> addToDo: aToDo [
 
-{ #category : #accessing }
-CategoriesRepository >> categories [
-
-	^ categories
+	toDos add: aToDo
 ]
 
 { #category : #initialization }
-CategoriesRepository >> initialize [
+ToDosRepository >> initialize [
 
 	super initialize.
-	categories := OrderedCollection new
+	toDos := OrderedCollection new
 ]
 
-{ #category : #movement }
-CategoriesRepository >> removeCategory: aCategory [
+{ #category : #'as yet unclassified' }
+ToDosRepository >> removeToDo: aToDo [ 
+	
+	toDos remove: aToDo
+]
 
-	categories remove: aCategory
+{ #category : #accessing }
+ToDosRepository >> toDos [
+
+	^ toDos
 ]

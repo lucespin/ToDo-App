@@ -80,7 +80,7 @@ EmployeeRegistrationWebView >> initializeNameField [
 { #category : #initialization }
 EmployeeRegistrationWebView >> initializeRegistrationButton [
 
-	acceptButton := self componentSupplier asynchronicButtonLabeled: 'Add employee'
+	acceptButton := self componentSupplier asynchronicButtonLabeled: 'Accept'
 		                applying: [ :theButton |  ]
 ]
 

@@ -15,14 +15,14 @@ CategoriesRepositoryTest >> testAddACategoryToARepository [
 	
 	aCategory := Category named: 'Enhancement'.
 	
-	aCategoryRepository add: aCategory.
+	aCategoryRepository addCategory: aCategory.
 
 	self withTheOnlyOneIn: aCategoryRepository categories
 		do: [ :storedCategory | self assert: storedCategory equals: aCategory ]
 ]
 
 { #category : #tests }
-CategoriesRepositoryTest >> testCategoryRepositoryStartsEmpty [
+CategoriesRepositoryTest >> testCategoriesRepositoryStartsEmpty [
 
 	self assertEmpty: CategoriesRepository new categories
 ]
@@ -36,9 +36,9 @@ CategoriesRepositoryTest >> testRemoveACategoryOfARepository [
 	
 	aCategory := Category named: 'Enhancement'.
 
-	aCategoryRepository add: aCategory.
+	aCategoryRepository addCategory: aCategory.
 
-	aCategoryRepository remove: aCategory.
+	aCategoryRepository removeCategory: aCategory.
 
 	self assert: aCategoryRepository categories isEmpty 
 ]

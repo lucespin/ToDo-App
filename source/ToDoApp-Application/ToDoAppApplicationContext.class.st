@@ -33,7 +33,8 @@ Class {
 		'categoriesRepository',
 		'currentWebView',
 		'mainWebView',
-		'employeesRepository'
+		'employeesRepository',
+		'toDosRepository'
 	],
 	#category : #'ToDoApp-Application'
 }
@@ -42,6 +43,12 @@ Class {
 ToDoAppApplicationContext >> addEmployee: anEmployee [
 
 	^ employeesRepository addEmployee: anEmployee
+]
+
+{ #category : #accessing }
+ToDoAppApplicationContext >> addToDo: aToDo [
+
+	^ toDosRepository addTodo: aToDo
 ]
 
 { #category : #accessing }
@@ -81,6 +88,7 @@ ToDoAppApplicationContext >> initializeMainWebView [
 { #category : #initialization }
 ToDoAppApplicationContext >> initializeRepositories [
 
+	toDosRepository := ToDosRepository new.
 	categoriesRepository := CategoriesRepository new.
 	employeesRepository := EmployeesRepository new
 ]
@@ -92,7 +100,19 @@ ToDoAppApplicationContext >> mainWebView [
 ]
 
 { #category : #accessing }
+ToDoAppApplicationContext >> removeTodo: aToDo [
+
+	^ toDosRepository removeToDo: aToDo
+]
+
+{ #category : #accessing }
 ToDoAppApplicationContext >> setCurrentWebViewTo: aCurrentWebView [
 
 	currentWebView := aCurrentWebView
+]
+
+{ #category : #accessing }
+ToDoAppApplicationContext >> toDos [
+
+	^ toDosRepository toDos
 ]
