@@ -76,25 +76,6 @@ ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
 ]
 
 { #category : #tests }
-ToDoTest >> testCreateAToDoWithCompletionDateOnStartDate [
-
-	| aToDo |
-
-	aToDo := ToDo
-		describedBy: 'Darle mantenimiento a los filtros'
-		withStartDate: (Date year: 2021 month: 11 day: 21)
-		andCompletionDate: (Date year: 2021 month: 11 day: 21).
-
-	aToDo
-		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
-		ifNone: [self assert: false].
-		
-	aToDo
-		withCompletionDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
-		ifNone: [self assert: false]
-]
-
-{ #category : #tests }
 ToDoTest >> testCreateAToDoWithDescription [
 
 	| aToDo |
@@ -102,37 +83,6 @@ ToDoTest >> testCreateAToDoWithDescription [
 	aToDo := ToDo describedBy: 'Correr 3km'.
 
 	self assert: aToDo description equals: 'Correr 3km'
-]
-
-{ #category : #tests }
-ToDoTest >> testCreateAToDoWithStartDate [
-
-	| aToDo |
-
-	aToDo := ToDo describedBy: 'Correr 3km' withStartDate: (Date year: 2021 month: 11 day: 21).
-
-	aToDo
-		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
-		ifNone: [self assert: false]
-]
-
-{ #category : #tests }
-ToDoTest >> testCreateAToDoWithStartDateAndCompletionDate [
-
-	| aToDo |
-
-	aToDo := ToDo
-		describedBy: 'Darle mantenimiento a los filtros'
-		withStartDate: (Date year: 2021 month: 11 day: 21)
-		andCompletionDate: (Date year: 2021 month: 11 day: 25).
-
-	aToDo
-		withStartDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 21)]
-		ifNone: [self assert: false].
-		
-	aToDo
-		withCompletionDateDo: [:date | self assert: date equals: (Date year: 2021 month: 11 day: 25)]
-		ifNone: [self assert: false]
 ]
 
 { #category : #tests }
@@ -168,10 +118,10 @@ ToDoTest >> testPrintOnAStream [
 
 	| aToDo |
 
-	aToDo := ToDo
-		describedBy: 'Iniciar proceso de registro'
-		withStartDate: (Date year: 2021 month: 3 day: 5)
-		andCompletionDate: (Date year: 2021 month: 3 day: 10).
+	aToDo := ToDo describedBy: 'Iniciar proceso de registro'.
+	aToDo
+		setStartDateTo: (Date year: 2021 month: 3 day: 5);
+		setCompletionDateTo: (Date year: 2021 month: 3 day: 10).
 
 	self
 		assert: aToDo printString
@@ -280,16 +230,4 @@ ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
 
 	self deny: writePrologue isOpen.
 	self deny: writePrologue isFinished
-]
-
-{ #category : #tests }
-ToDoTest >> testWhenStartDateIsAfterCompletionDateThenToDoCreationShouldFail [
-
-	self
-		should: [ToDo
-				describedBy: 'Algo'
-				withStartDate: Date today
-				andCompletionDate: Date yesterday]
-		raise: InstanceCreationFailed
-		description: 'A completion date must be after the start date'
 ]

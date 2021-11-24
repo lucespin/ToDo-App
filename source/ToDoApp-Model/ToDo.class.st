@@ -122,25 +122,6 @@ ToDo >> initializeDescribedBy: aDescription [
 	state := OpenToDo new
 ]
 
-{ #category : #initialization }
-ToDo >> initializeDescribedBy: aDescription withStartDate: aDate [ 
-
-	description := aDescription.
-	possibleStartDate := aDate.
-	state := OpenToDo new
-]
-
-{ #category : #initialization }
-ToDo >> initializeDescribedBy: aDescription withStartDate: aStartDate andCompletionDate: aCompletionDate [
-
-	self assert: aStartDate isOnOrPreviousTo: aCompletionDate ifNotRaise: InstanceCreationFailed.
-
-	description := aDescription.
-	possibleStartDate := aStartDate.
-	possibleCompletionDate := aCompletionDate.
-	state := OpenToDo new
-]
-
 { #category : #boolean }
 ToDo >> isFinished [
 
