@@ -66,7 +66,11 @@ ToDosWebView >> initializeAdditionButton [
 		applying: [:theButton | ].
 
 	additionButton on trigger
-		serverDo: [self session applicationContext setCurrentWebViewTo: ToDoAdditionWebView new];
+		serverDo: [self session applicationContext
+				setCurrentWebViewTo: (ToDoAdditionWebView
+								withDescriptionFieldShowing: 'Description'
+								andApplying: [] asWebComponentCommand)
+			];
 		render: self session applicationContext identifiedCurrentWebView
 ]
 
@@ -117,7 +121,7 @@ ToDosWebView >> titleStyle [
 	  ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ToDosWebView >> toDos [
 
 	^ self session applicationContext toDos

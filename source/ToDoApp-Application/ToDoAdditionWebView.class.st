@@ -32,8 +32,26 @@ Class {
 	#category : #'ToDoApp-Application'
 }
 
+{ #category : #'instance creation' }
+ToDoAdditionWebView class >> applyingOnDescriptionField: aComponentCommand [ 
+
+	^ self new initializeApplyingOnDescriptionField: aComponentCommand
+]
+
+{ #category : #'instance creation' }
+ToDoAdditionWebView class >> withDescriptionFieldShowing: aPlaceholderText andApplying: aComponentCommand [
+
+	^ self new initializeWithDescriptionFieldShowing: aPlaceholderText andApplying: aComponentCommand
+]
+
 { #category : #adding }
 ToDoAdditionWebView >> addToDo [
+		
+	self session applicationContext addToDo: self buildToDo
+]
+
+{ #category : #configuring }
+ToDoAdditionWebView >> buildToDo [
 
 	| toDoDescription toDo |
 
@@ -47,8 +65,8 @@ ToDoAdditionWebView >> addToDo [
 	completionDateField contents
 		ifEmpty: []
 		ifNotEmpty: [:dateAsString | toDo setCompletionDateTo: (Date fromString: dateAsString)].
-
-	self session applicationContext addToDo: toDo
+		
+	^ toDo 
 ]
 
 { #category : #configuring }
@@ -60,9 +78,16 @@ ToDoAdditionWebView >> configureTriggers [
 
 	acceptButton on trigger
 		disable;
-		serverDo: [ 
-			self addToDo.
-			self session applicationContext setCurrentWebViewTo: ToDosWebView new
+		serverDo: [descriptionField model
+				ifEmpty: [self session applicationContext
+						setCurrentWebViewTo:
+							(self class
+								withDescriptionFieldShowing: 'A ToDo must have a description'
+								andApplying: self errorDescriptionFieldCommand)
+					]
+				ifNotEmpty: [self addToDo.
+					self session applicationContext setCurrentWebViewTo: ToDosWebView new
+					]
 			];
 		render: self session applicationContext identifiedCurrentWebView
 ]
@@ -74,15 +99,16 @@ ToDoAdditionWebView >> dateFieldWithPlaceholder: aPlaceholderText [
 		dateFieldApplying: [:theField | theField setPlaceholderTo: aPlaceholderText]
 ]
 
-{ #category : #initialization }
-ToDoAdditionWebView >> initialize [
+{ #category : #configuring }
+ToDoAdditionWebView >> errorDescriptionFieldCommand [
 
-	super initialize.
-
-	self
-		initializeFields;
-		initializeAdditionButton;
-		configureTriggers
+	^ [:field | 
+	field
+		setStyleTo: [:style | 
+			style
+				borderColor: 'red'
+			]
+	]
 ]
 
 { #category : #initialization }
@@ -93,14 +119,33 @@ ToDoAdditionWebView >> initializeAdditionButton [
 ]
 
 { #category : #initialization }
-ToDoAdditionWebView >> initializeFields [
+ToDoAdditionWebView >> initializeCompletionDateField [
 
-	startDateField := self dateFieldWithPlaceholder: 'Start Date'.
+	completionDateField := self dateFieldWithPlaceholder: 'Completion Date'
+]
+
+{ #category : #initialization }
+ToDoAdditionWebView >> initializeDescriptionFieldWith: aPlaceholderText applying: aComponentCommand [
 
 	descriptionField := self componentSupplier
-		singleLineTextFieldApplying: [:theField | theField setPlaceholderTo: 'Description'].
+		singleLineTextFieldApplying: [:theField | (theField setPlaceholderTo: aPlaceholderText) + aComponentCommand]
+]
 
-	completionDateField := self dateFieldWithPlaceholder: 'Completion Date'.
+{ #category : #initialization }
+ToDoAdditionWebView >> initializeStartDateField [
+
+	startDateField := self dateFieldWithPlaceholder: 'Start Date'
+]
+
+{ #category : #initialization }
+ToDoAdditionWebView >> initializeWithDescriptionFieldShowing: aPlaceholderText andApplying: aComponentCommand [
+	
+	self
+		initializeStartDateField;
+		initializeDescriptionFieldWith: aPlaceholderText applying: aComponentCommand;
+		initializeCompletionDateField;
+		initializeAdditionButton;
+		configureTriggers
 ]
 
 { #category : #rendering }
