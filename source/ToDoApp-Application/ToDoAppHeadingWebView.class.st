@@ -42,7 +42,7 @@ ToDoAppHeadingWebView >> headingStyle [
 		style
 			textAlign: #center;
 			textShadow: '0 0 3px #5410B3';
-			color: '#5410B3';
+			color: '#5410E0';
 			padding: 20 px;
 			opacity: 90 percent
 	]

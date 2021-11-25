@@ -33,10 +33,10 @@ ToDoTest >> testAssignAnOpenToDoToAnEmployee [
 
 	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
 
-	aToDo assignTo: 'Dexter'.
+	aToDo assignTo: (Employee named: 'Dexter').
 
 	aToDo
-		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee equals: 'Dexter' ]
+		withAssignedEmployeeDo: [ :anEmployee | self assert: anEmployee name equals: 'Dexter' ]
 		ifNone: [ self assert: false ]
 ]
 
@@ -48,12 +48,12 @@ ToDoTest >> testAssingToAnEmployeeAFinishedToDoShouldFail [
 	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
 
 	aToDo
-		assignTo: 'Dexter';
+		assignTo: (Employee named: 'Dexter');
 		markAsInProgress;
 		markAsFinished.
 
 	self
-		should: [ aToDo assignTo: 'Debora' ]
+		should: [ aToDo assignTo: (Employee named: 'Debora') ]
 		raise: AssertionFailed
 		withMessageText: 'A finished ToDo can''t be reassigned'
 ]
@@ -66,11 +66,11 @@ ToDoTest >> testAssingToAnEmployeeAnInProgressToDoShouldFail [
 	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
 
 	aToDo
-		assignTo: 'Dexter';
+		assignTo: (Employee named: 'Dexter');
 		markAsInProgress.
 
 	self
-		should: [ aToDo assignTo: 'Debora' ]
+		should: [ aToDo assignTo: (Employee named: 'Debora') ]
 		raise: AssertionFailed
 		withMessageText: 'An in-progress ToDo can''t be reassigned'
 ]
@@ -92,7 +92,7 @@ ToDoTest >> testMarkAsFinishedAnOpenToDoShouldFail [
 
 	aToDo := ToDo describedBy: 'Preparar equipo de grabación'.
 
-	aToDo assignTo: 'Dexter'.
+	aToDo assignTo: (Employee named: 'Dexter').
 
 	self
 		should: [ aToDo markAsFinished. ]
@@ -128,7 +128,7 @@ ToDoTest >> testPrintOnAStream [
 		equals:
 			'a ToDo with description: Iniciar proceso de registro. Assigned employee: unassigned. Start date: 5 March 2021. Completion date: 10 March 2021.'.
 
-	aToDo assignTo: 'Carla'.
+	aToDo assignTo: (Employee named: 'Carla').
 	self
 		assert: aToDo printString
 		equals:
@@ -180,7 +180,7 @@ ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 ToDoTest >> testWhenMarkAsFinishedAFinishedToDoThenIsFinished [
 
 	writePrologue
-		assignTo: 'Jorge Luis Borges';
+		assignTo: (Employee named: 'Jorge Luis Borges');
 		markAsInProgress;
 		markAsFinished;
 		markAsFinished.
@@ -195,7 +195,7 @@ ToDoTest >> testWhenMarkAsFinishedAFinishedToDoThenIsFinished [
 ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
 
 	writePrologue
-		assignTo: 'Jorge Luis Borges';
+		assignTo: (Employee named: 'Jorge Luis Borges');
 		markAsInProgress;
 		markAsFinished.
 
@@ -209,7 +209,7 @@ ToDoTest >> testWhenMarkAsFinishedAnInProgressToDoThenIsFinished [
 ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
 
 	writePrologue
-		assignTo: 'Aye';
+		assignTo: (Employee named: 'Aye');
 		markAsInProgress.
 
 	self assert: writePrologue isInProgress.
@@ -222,7 +222,7 @@ ToDoTest >> testWhenMarkAsInProgressAnAssignedOpenToDoThenIsInProgress [
 ToDoTest >> testWhenMarkAsInProgressAnInProgressToDoThenIsInProgress [
 
 	writePrologue
-		assignTo: 'Jorge Luis Borges';
+		assignTo: (Employee named: 'Jorge Luis Borges');
 		markAsInProgress;
 		markAsInProgress.
 

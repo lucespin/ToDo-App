@@ -22,6 +22,30 @@ ToDosRepositoryTest >> testAddAToDoToARepository [
 ]
 
 { #category : #tests }
+ToDosRepositoryTest >> testRemoveAFinishedToDoOfARepositoryShouldFail [
+
+	| aToDo aToDoRepository |
+
+	aToDoRepository := ToDosRepository new.
+
+	self assertEmpty: aToDoRepository toDos.
+
+	aToDo := ToDo describedBy: 'Buy the Corvette'.
+
+	aToDo
+		assignTo: (Employee named: 'Kam');
+		markAsInProgress;
+		markAsFinished.
+
+	aToDoRepository addToDo: aToDo.
+
+	self
+		should: [aToDoRepository removeToDo: aToDo]
+		raise: AssertionFailed
+		description: 'The ToDo is not open'
+]
+
+{ #category : #tests }
 ToDosRepositoryTest >> testRemoveAToDoOfARepository [
 
 	| aToDo aToDoRepository |
@@ -37,6 +61,29 @@ ToDosRepositoryTest >> testRemoveAToDoOfARepository [
 	aToDoRepository removeToDo: aToDo.
 
 	self assert: aToDoRepository toDos isEmpty 
+]
+
+{ #category : #tests }
+ToDosRepositoryTest >> testRemoveAnInProgressToDoOfARepositoryShouldFail [
+
+	| aToDo aToDoRepository |
+
+	aToDoRepository := ToDosRepository new.
+
+	self assertEmpty: aToDoRepository toDos.
+
+	aToDo := ToDo describedBy: 'Buy the Corvette'.
+	
+	aToDoRepository addToDo: aToDo.
+
+	aToDo
+		assignTo: (Employee named: 'Kam');
+		markAsInProgress.	
+
+	self
+		should: [aToDoRepository removeToDo: aToDo]
+		raise: AssertionFailed
+		description: 'The ToDo is not open'
 ]
 
 { #category : #tests }

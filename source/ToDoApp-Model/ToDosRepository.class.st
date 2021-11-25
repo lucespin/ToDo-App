@@ -47,7 +47,12 @@ ToDosRepository >> initialize [
 
 { #category : #movement }
 ToDosRepository >> removeToDo: aToDo [ 
-	
+
+	AssertionChecker
+		enforce: [aToDo isOpen]
+		because: 'The ToDo is not open'
+		raising: AssertionFailed.
+
 	toDos remove: aToDo
 ]
 

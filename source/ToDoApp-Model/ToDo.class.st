@@ -100,7 +100,7 @@ ToDo >> assignTo: anEmployee [
 { #category : #movement }
 ToDo >> assignWhenIsOpen: anEmployee [
 
-	possibleAssignedEmployee := anEmployee 
+	possibleAssignedEmployee := Optional containing: anEmployee 
 ]
 
 { #category : #movement }
@@ -119,7 +119,10 @@ ToDo >> description [
 ToDo >> initializeDescribedBy: aDescription [ 
 
 	description := aDescription.
-	state := OpenToDo new
+	state := OpenToDo new.
+	possibleAssignedEmployee := Optional unusedBecause: 'unassigned'.
+	possibleStartDate := Optional unusedBecause: 'unassigned'.
+	possibleCompletionDate := Optional unusedBecause: 'unassigned'
 ]
 
 { #category : #boolean }
@@ -162,7 +165,7 @@ ToDo >> printOn: aStream [
 	nextPutAll: description.
 	aStream nextPutAll: '. Assigned employee: '.
 	self
-		withAssignedEmployeeDo: [:employee | aStream nextPutAll: employee]
+		withAssignedEmployeeDo: [:employee | aStream nextPutAll: employee name]
 		ifNone: [aStream nextPutAll: 'unassigned'].
 	aStream nextPutAll: '. Start date: '.
 	self withStartDateDo: [:date | date printOn: aStream] ifNone: [aStream nextPutAll: 'unassigned'].
@@ -176,26 +179,25 @@ ToDo >> printOn: aStream [
 { #category : #setting }
 ToDo >> setCompletionDateTo: aDate [
 
-	self
-		withStartDateDo: [:startDate | self assert: startDate isOnOrPreviousTo: aDate ifNotRaise: AssertionFailed]
-		ifNone: [].
-	possibleCompletionDate := aDate
+	possibleStartDate
+		withContentDo: [:startDate | self assert: startDate isOnOrPreviousTo: aDate ifNotRaise: AssertionFailed].
+
+	possibleCompletionDate := Optional containing: aDate
 ]
 
 { #category : #setting }
 ToDo >> setStartDateTo: aDate [
 
-	self
-		withCompletionDateDo: [:completionDate | self assert: aDate isOnOrPreviousTo: completionDate ifNotRaise: AssertionFailed]
-		ifNone: [].
+	possibleCompletionDate
+		withContentDo: [:completionDate | self assert: aDate isOnOrPreviousTo: completionDate ifNotRaise: AssertionFailed].
 
-	possibleStartDate := aDate
+	possibleStartDate := Optional containing: aDate
 ]
 
 { #category : #'private - utility' }
 ToDo >> with: anAttribute do: aMonadycBlock ifNone: aNoneBlock [
 
-	^ anAttribute ifNil: aNoneBlock ifNotNil: aMonadycBlock
+	^ anAttribute withContentDo: aMonadycBlock ifUnused: aNoneBlock
 ]
 
 { #category : #movement }
