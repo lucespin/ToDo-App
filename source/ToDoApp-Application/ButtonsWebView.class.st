@@ -39,7 +39,23 @@ Class {
 { #category : #accessing }
 ButtonsWebView >> buttonLabeled: aLabel [
 
-	^ self componentSupplier asynchronicButtonLabeled: aLabel applying: [ :theButton |  ]
+	^ self componentSupplier
+		asynchronicButtonLabeled: aLabel
+		applying:
+			[:theButton | theButton setStyleTo: self buttonStyleCommand]
+]
+
+{ #category : #accessing }
+ButtonsWebView >> buttonStyleCommand [
+
+	^ [:style | 
+	style
+		position: #relative;
+		left: 80 percent;
+		backgroundColor: '#FFA73D';
+		color: #white;
+		fontWeight: #bold
+	]
 ]
 
 { #category : #configuring }
@@ -82,7 +98,7 @@ ButtonsWebView >> renderContentOn: aCanvas [
 	self configureTriggers.
 
 	aCanvas
-		render: homeButton;
+		render: toDosButton;
 		render: employeesButton;
-		render: toDosButton
+		render: homeButton
 ]
