@@ -1,106 +1,15 @@
-"
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
-
-For the Class part:  State a one line summary. For example, ""I represent a paragraph of text"".
-
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
-
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-
-    Implementation Points
-"
 Class {
 	#name : #ToDoAdditionWebView,
 	#superclass : #WAPainter,
 	#instVars : [
-		'descriptionField',
-		'startDateField',
-		'completionDateField',
-		'acceptButton'
+		'acceptButton',
+		'toDoWebView'
 	],
 	#category : #'ToDoApp-Application'
 }
 
-{ #category : #'instance creation' }
-ToDoAdditionWebView class >> applyingOnDescriptionField: aComponentCommand [ 
-
-	^ self new initializeApplyingOnDescriptionField: aComponentCommand
-]
-
-{ #category : #'instance creation' }
-ToDoAdditionWebView class >> withDescriptionFieldShowing: aPlaceholderText andApplying: aComponentCommand [
-
-	^ self new initializeWithDescriptionFieldShowing: aPlaceholderText andApplying: aComponentCommand
-]
-
-{ #category : #adding }
-ToDoAdditionWebView >> addToDo [
-		
-	self session applicationContext addToDo: self buildToDo
-]
-
-{ #category : #configuring }
-ToDoAdditionWebView >> buildToDo [
-
-	| toDoDescription toDo |
-
-	toDoDescription := descriptionField model.
-	toDo := ToDo describedBy: toDoDescription.
-
-	startDateField contents
-		ifEmpty: []
-		ifNotEmpty: [:dateAsString | toDo setStartDateTo: (Date fromString: dateAsString)].
-
-	completionDateField contents
-		ifEmpty: []
-		ifNotEmpty: [:dateAsString | toDo setCompletionDateTo: (Date fromString: dateAsString)].
-		
-	^ toDo 
-]
-
-{ #category : #configuring }
-ToDoAdditionWebView >> configureTriggers [
-
-	startDateField on trigger serializeIt.
-	descriptionField on trigger serializeIt.
-	completionDateField on trigger serializeIt.
-
-	acceptButton on trigger
-		disable;
-		serverDo: [descriptionField model
-				ifEmpty: [self session applicationContext
-						setCurrentWebViewTo:
-							(self class
-								withDescriptionFieldShowing: 'A ToDo must have a description'
-								andApplying: self errorDescriptionFieldCommand)
-					]
-				ifNotEmpty: [self addToDo.
-					self session applicationContext setCurrentWebViewTo: ToDosWebView new
-					]
-			];
-		render: self session applicationContext identifiedCurrentWebView
-]
-
-{ #category : #initialization }
-ToDoAdditionWebView >> dateFieldWithPlaceholder: aPlaceholderText [
-
-	^ self componentSupplier
-		dateFieldApplying: [:theField | theField setPlaceholderTo: aPlaceholderText]
-]
-
-{ #category : #configuring }
-ToDoAdditionWebView >> errorDescriptionFieldCommand [
+{ #category : #accessing }
+ToDoAdditionWebView class >> errorDescriptionFieldCommand [
 
 	^ [:field | 
 	field
@@ -111,40 +20,63 @@ ToDoAdditionWebView >> errorDescriptionFieldCommand [
 	]
 ]
 
+{ #category : #'instance creation' }
+ToDoAdditionWebView class >> new [
+
+	^ self
+		  withDescriptionFieldSuggesting: 'Description'
+		  applying: [  ] asWebComponentCommand
+]
+
+{ #category : #'instance creation' }
+ToDoAdditionWebView class >> newWhenDescriptionIsEmpty [
+
+	^ self withDescriptionFieldSuggesting: 'A ToDo must have a description'
+		  applying: self errorDescriptionFieldCommand
+]
+
+{ #category : #'private - instance creation' }
+ToDoAdditionWebView class >> withDescriptionFieldSuggesting: aSuggestion applying: aComponentCommand [
+
+	^ super new
+		  initializeWithDescriptionFieldSuggesting: aSuggestion
+		  applying: aComponentCommand
+]
+
+{ #category : #configuring }
+ToDoAdditionWebView >> configureTriggers [
+
+	acceptButton on trigger
+		disable;
+		serverDo: [ 
+			toDoWebView
+				withModelDo: [ :aToDo | 
+					self session applicationContext
+						addToDo: aToDo;
+						setCurrentWebViewTo: ToDosDashboardWebView new
+					]
+				ifUnable: [ 
+				self session applicationContext setCurrentWebViewTo: self class newWhenDescriptionIsEmpty ]
+			];
+		render: self session applicationContext identifiedCurrentWebView
+]
+
 { #category : #initialization }
-ToDoAdditionWebView >> initializeAdditionButton [
+ToDoAdditionWebView >> initializeAcceptButton [
 
 	acceptButton := self componentSupplier asynchronicButtonLabeled: 'Accept'
 		                applying: [ :theButton |  ]
 ]
 
 { #category : #initialization }
-ToDoAdditionWebView >> initializeCompletionDateField [
+ToDoAdditionWebView >> initializeWithDescriptionFieldSuggesting: aSuggestion applying: aComponentCommand [
 
-	completionDateField := self dateFieldWithPlaceholder: 'Completion Date'
-]
+	toDoWebView := ToDoWebView
+		               withDescriptionFieldSuggesting: aSuggestion
+		               applying: aComponentCommand.
 
-{ #category : #initialization }
-ToDoAdditionWebView >> initializeDescriptionFieldWith: aPlaceholderText applying: aComponentCommand [
-
-	descriptionField := self componentSupplier
-		singleLineTextFieldApplying: [:theField | (theField setPlaceholderTo: aPlaceholderText) + aComponentCommand]
-]
-
-{ #category : #initialization }
-ToDoAdditionWebView >> initializeStartDateField [
-
-	startDateField := self dateFieldWithPlaceholder: 'Start Date'
-]
-
-{ #category : #initialization }
-ToDoAdditionWebView >> initializeWithDescriptionFieldShowing: aPlaceholderText andApplying: aComponentCommand [
-	
 	self
-		initializeStartDateField;
-		initializeDescriptionFieldWith: aPlaceholderText applying: aComponentCommand;
-		initializeCompletionDateField;
-		initializeAdditionButton;
+		initializeAcceptButton;
 		configureTriggers
 ]
 
@@ -152,8 +84,6 @@ ToDoAdditionWebView >> initializeWithDescriptionFieldShowing: aPlaceholderText a
 ToDoAdditionWebView >> renderContentOn: aCanvas [
 
 	aCanvas
-		render: startDateField;
-		render: descriptionField;
-		render: completionDateField;
+		render: toDoWebView;
 		render: acceptButton
 ]
