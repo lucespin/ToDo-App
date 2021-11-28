@@ -22,6 +22,23 @@ ToDosRepositoryTest >> testAddAToDoToARepository [
 ]
 
 { #category : #tests }
+ToDosRepositoryTest >> testCantUpdateNonStoredToDo [
+
+	| aToDoRepository aToDo updatedToDo |
+
+	aToDoRepository := ToDosRepository new.
+
+	self assertEmpty: aToDoRepository toDos.
+
+	aToDo := ToDo describedBy: 'Buy the Corvette'.
+	updatedToDo := ToDo describedBy: 'Buy diapers'.
+
+	self should: [ aToDoRepository updateToDo: aToDo with: updatedToDo ]
+		raise: ObjectNotFound
+		withMessageText: ( 'No se encontró <1p>.' expandMacrosWith: aToDo )
+]
+
+{ #category : #tests }
 ToDosRepositoryTest >> testRemoveAFinishedToDoOfARepositoryShouldFail [
 
 	| aToDo aToDoRepository |
@@ -49,18 +66,21 @@ ToDosRepositoryTest >> testRemoveAFinishedToDoOfARepositoryShouldFail [
 ToDosRepositoryTest >> testRemoveAToDoOfARepository [
 
 	| aToDo aToDoRepository |
-		
+
 	aToDoRepository := ToDosRepository new.
-	
+
 	self assertEmpty: aToDoRepository toDos.
-	
+
 	aToDo := ToDo describedBy: 'Buy the Corvette'.
-	
+
 	aToDoRepository addToDo: aToDo.
+
+	self withTheOnlyOneIn: aToDoRepository toDos
+		do: [ :aStoredToDo | self assert: aStoredToDo equals: aToDo ].
 
 	aToDoRepository removeToDo: aToDo.
 
-	self assert: aToDoRepository toDos isEmpty 
+	self assertEmpty: aToDoRepository toDos
 ]
 
 { #category : #tests }
@@ -90,4 +110,28 @@ ToDosRepositoryTest >> testRemoveAnInProgressToDoOfARepositoryShouldFail [
 ToDosRepositoryTest >> testTodosRepositoryStartsEmpty [
 
 	self assertEmpty: ToDosRepository new toDos
+]
+
+{ #category : #tests }
+ToDosRepositoryTest >> testUpdatingToDo [
+
+	| aToDoRepository aToDo updatedToDo |
+
+	aToDoRepository := ToDosRepository new.
+
+	self assertEmpty: aToDoRepository toDos.
+
+	aToDo := ToDo describedBy: 'Buy the Corvette'.
+
+	aToDoRepository addToDo: aToDo.
+
+	updatedToDo := ToDo describedBy: 'Buy diapers'.
+	
+	aToDoRepository updateToDo: aToDo with: updatedToDo.
+
+	self withTheOnlyOneIn: aToDoRepository toDos do: [ :storedToDo | 
+		self
+			assert: storedToDo equals: aToDo;
+			assert: storedToDo description equals: updatedToDo description
+		]
 ]

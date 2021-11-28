@@ -194,6 +194,12 @@ ToDo >> setStartDateTo: aDate [
 	possibleStartDate := Optional containing: aDate
 ]
 
+{ #category : #updating }
+ToDo >> synchronizeWith: aToDo [
+
+	description := aToDo description
+]
+
 { #category : #'private - utility' }
 ToDo >> with: anAttribute do: aMonadycBlock ifNone: aNoneBlock [
 

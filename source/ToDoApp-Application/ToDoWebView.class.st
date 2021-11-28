@@ -9,10 +9,37 @@ Class {
 	#category : #'ToDoApp-Application'
 }
 
+{ #category : #accessing }
+ToDoWebView class >> errorDescriptionFieldCommand [
+
+	^ [:field | 
+	field
+		setStyleTo: [:style | 
+			style
+				borderColor: 'red'
+			]
+	]
+]
+
 { #category : #'instance creation' }
+ToDoWebView class >> new [
+
+	^ self
+		  withDescriptionFieldSuggesting: 'Description'
+		  applying: [  ] asWebComponentCommand
+]
+
+{ #category : #'instance creation' }
+ToDoWebView class >> newWhenDescriptionIsEmpty [
+
+	^ self withDescriptionFieldSuggesting: 'A ToDo must have a description'
+		  applying: self errorDescriptionFieldCommand
+]
+
+{ #category : #'private - instance creation' }
 ToDoWebView class >> withDescriptionFieldSuggesting: aSuggestion applying: aComponentCommand [
 
-	^ self new initializeWithDescriptionFieldSuggesting: aSuggestion applying: aComponentCommand
+	^ super new initializeWithDescriptionFieldSuggesting: aSuggestion applying: aComponentCommand
 ]
 
 { #category : #configuring }
@@ -66,6 +93,18 @@ ToDoWebView >> renderContentOn: aCanvas [
 		render: startDateField;
 		render: descriptionField;
 		render: completionDateField
+]
+
+{ #category : #configuring }
+ToDoWebView >> updateViewsWith: aToDo [
+
+	aToDo withStartDateDo: [ :aStartDate | startDateField changeModelTo: aStartDate ] ifNone: [  ].
+
+	descriptionField changeModelTo: aToDo description.
+
+	aToDo withCompletionDateDo: [ :aCompletionDate | 
+		completionDateField changeModelTo: aCompletionDate ]
+		ifNone: [  ]
 ]
 
 { #category : #building }

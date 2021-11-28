@@ -2,9 +2,9 @@ Class {
 	#name : #ToDoEditionWebView,
 	#superclass : #WAPainter,
 	#instVars : [
-		'todoToEdit',
 		'acceptButton',
-		'toDoWebView'
+		'toDoWebView',
+		'toDoToEdit'
 	],
 	#category : #'ToDoApp-Application'
 }
@@ -24,11 +24,11 @@ ToDoEditionWebView >> configureTriggers [
 			toDoWebView
 				withModelDo: [ :anUpdatedToDo | 
 					self session applicationContext
-						updateToDo: todoToEdit with: anUpdatedToDo;
+						updateToDo: toDoToEdit with: anUpdatedToDo;
 						setCurrentWebViewTo: ToDosDashboardWebView new
 					]
 				ifUnable: [ 
-				self session applicationContext setCurrentWebViewTo: self class newWhenDescriptionIsEmpty ]
+				self session applicationContext setCurrentWebViewTo: ToDoWebView newWhenDescriptionIsEmpty ]
 			];
 		render: self session applicationContext identifiedCurrentWebView
 ]
@@ -43,12 +43,19 @@ ToDoEditionWebView >> initializeAcceptButton [
 { #category : #initialization }
 ToDoEditionWebView >> initializeEditing: aToDoToEdit [
 
-	todoToEdit := aToDoToEdit.
-	toDoWebView := ToDoWebView new.
+	toDoToEdit := aToDoToEdit.
 
 	self
+		initializeToDoWebView;
 		initializeAcceptButton;
 		configureTriggers
+]
+
+{ #category : #initialization }
+ToDoEditionWebView >> initializeToDoWebView [
+
+	toDoWebView := ToDoWebView new.
+	toDoWebView updateViewsWith: toDoToEdit
 ]
 
 { #category : #rendering }
