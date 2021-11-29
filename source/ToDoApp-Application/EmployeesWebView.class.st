@@ -75,9 +75,8 @@ EmployeesWebView >> initializeRegistrationButton [
 EmployeesWebView >> initializeTableWebView [
 
 	tableWebView := self componentSupplier tableBuilder
-		                addColumn:
-			                ( self addColumnTitled: 'Name' rendering: [ :employee | employee name ] );
-		                build
+		addColumn: (self addColumnTitled: 'Name' rendering: [ :employee | employee name ]);
+		build
 ]
 
 { #category : #rendering }

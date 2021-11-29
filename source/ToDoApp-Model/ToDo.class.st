@@ -78,7 +78,7 @@ ToDo class >> describedBy: aDescription withStartDate: aStartDate andCompletionD
 ToDo >> assert: aStarDate isOnOrPreviousTo: aCompletionDate ifNotRaise: errorToSignal [
 
 	AssertionChecker
-		enforce: [aStarDate isOnOrBefore: aCompletionDate]
+		enforce: [ aStarDate isOnOrBefore: aCompletionDate ]
 		because: 'A completion date must be after the start date'
 		raising: errorToSignal
 ]
@@ -161,18 +161,21 @@ ToDo >> markAsInProgress [
 ToDo >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream nextPutAll: ' with description: '; 
-	nextPutAll: description.
+	aStream
+		nextPutAll: ' with description: ';
+		nextPutAll: description.
 	aStream nextPutAll: '. Assigned employee: '.
 	self
-		withAssignedEmployeeDo: [:employee | aStream nextPutAll: employee name]
-		ifNone: [aStream nextPutAll: 'unassigned'].
+		withAssignedEmployeeDo: [ :employee | aStream nextPutAll: employee name ]
+		ifNone: [ aStream nextPutAll: 'unassigned' ].
 	aStream nextPutAll: '. Start date: '.
-	self withStartDateDo: [:date | date printOn: aStream] ifNone: [aStream nextPutAll: 'unassigned'].
+	self
+		withStartDateDo: [ :date | date printOn: aStream ]
+		ifNone: [ aStream nextPutAll: 'unassigned' ].
 	aStream nextPutAll: '. Completion date: '.
 	self
-		withCompletionDateDo: [:date | date printOn: aStream]
-		ifNone: [aStream nextPutAll: 'unassigned'].
+		withCompletionDateDo: [ :date | date printOn: aStream ]
+		ifNone: [ aStream nextPutAll: 'unassigned' ].
 	aStream nextPut: $.
 ]
 
@@ -180,7 +183,7 @@ ToDo >> printOn: aStream [
 ToDo >> setCompletionDateTo: aDate [
 
 	possibleStartDate
-		withContentDo: [:startDate | self assert: startDate isOnOrPreviousTo: aDate ifNotRaise: AssertionFailed].
+		withContentDo: [ :startDate | self assert: startDate isOnOrPreviousTo: aDate ifNotRaise: AssertionFailed ].
 
 	possibleCompletionDate := Optional containing: aDate
 ]
@@ -189,7 +192,7 @@ ToDo >> setCompletionDateTo: aDate [
 ToDo >> setStartDateTo: aDate [
 
 	possibleCompletionDate
-		withContentDo: [:completionDate | self assert: aDate isOnOrPreviousTo: completionDate ifNotRaise: AssertionFailed].
+		withContentDo: [ :completionDate | self assert: aDate isOnOrPreviousTo: completionDate ifNotRaise: AssertionFailed ].
 
 	possibleStartDate := Optional containing: aDate
 ]

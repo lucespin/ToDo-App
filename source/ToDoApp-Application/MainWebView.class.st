@@ -79,11 +79,11 @@ MainWebView >> renderContentOn: aCanvas [
 	aCanvas
 		render:
 			(self componentSupplier
-				divisionContainerWrapping: [:canvas | 
+				divisionContainerWrapping: [ :canvas | 
 					canvas
 						render: headingWebView;
 						render: buttonsWebView;
 						render: identifiedCurrentWebView
 					]
-				applying: [:div | div addClass bootstrap3 container])
+				applying: [ :div | div addClass bootstrap3 container ])
 ]

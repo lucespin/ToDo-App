@@ -11,24 +11,26 @@ Class {
 { #category : #'accessing - column renderers' }
 ToDosDashboardWebView >> actionsColumn [
 
-	^ self addColumnTitled: 'Actions' rendering: [ :aToDo | 
-		  self componentSupplier gridBuilder
-			  addContent: ( self buttonToEdit: aToDo );
-			  addContent: ( self buttonToRemove: aToDo );
-			  build
-		  ]
+	^ self
+		addColumnTitled: 'Actions'
+		rendering: [ :aToDo | 
+			self componentSupplier gridBuilder
+				addContent: (self buttonToEdit: aToDo);
+				addContent: (self buttonToRemove: aToDo);
+				build
+			]
 ]
 
 { #category : #adding }
 ToDosDashboardWebView >> addColumnTitled: aTitle rendering: aRenderingCommand [
 
-	^ [:column | 
+	^ [ :column | 
 	column
-		titled: aTitle applying: [:title | title setStyleTo: self titleStyleCommand ];
+		titled: aTitle applying: [ :title | title setStyleTo: self titleStyleCommand ];
 		rendering: aRenderingCommand;
-		applyingToEachCell: [:cell | 
+		applyingToEachCell: [ :cell | 
 			cell
-				setStyleTo: [:style | 
+				setStyleTo: [ :style | 
 					style
 						padding: 8 px;
 						textAlign: #center
@@ -42,7 +44,7 @@ ToDosDashboardWebView >> assignedEmployeeColumn [
 
 	^ self
 		addColumnTitled: 'Assigned To'
-		rendering: [:toDo | toDo withAssignedEmployeeDo: [:employee | employee name] ifNone: ['Unassigned']]
+		rendering: [ :toDo | toDo withAssignedEmployeeDo: [ :employee | employee name ] ifNone: [ 'Unassigned' ] ]
 ]
 
 { #category : #accessing }
@@ -50,12 +52,12 @@ ToDosDashboardWebView >> buttonToEdit: aToDo [
 
 	| editButton |
 
-	editButton := self componentSupplier asynchronicButtonLabeled: 'Edit'
-		              applying: [ :button | button setStyleTo: self buttonsStyleCommand ].
+	editButton := self componentSupplier
+		asynchronicButtonLabeled: 'Edit'
+		applying: [ :button | button setStyleTo: self buttonsStyleCommand ].
 
 	editButton on trigger
-		serverDo: [ 
-			self session applicationContext setCurrentWebViewTo: ( ToDoEditionWebView editing: aToDo ) ];
+		serverDo: [ self session applicationContext setCurrentWebViewTo: (ToDoEditionWebView editing: aToDo) ];
 		render: self session applicationContext identifiedCurrentWebView.
 
 	^ editButton
@@ -92,13 +94,13 @@ ToDosDashboardWebView >> completionDateColumn [
 
 	^ self
 		addColumnTitled: 'Completion Date'
-		rendering: [:toDo | toDo withCompletionDateDo: [:date | date] ifNone: ['Unassigned']]
+		rendering: [ :toDo | toDo withCompletionDateDo: [ :date | date ] ifNone: [ 'Unassigned' ] ]
 ]
 
 { #category : #'accessing - column renderers' }
 ToDosDashboardWebView >> descriptionColumn [
 
-	^ self addColumnTitled: 'Description' rendering: [:toDo | toDo description]
+	^ self addColumnTitled: 'Description' rendering: [ :toDo | toDo description ]
 ]
 
 { #category : #initialization }
@@ -154,7 +156,7 @@ ToDosDashboardWebView >> startDateColumn [
 
 	^ self
 		addColumnTitled: 'Start Date'
-		rendering: [:toDo | toDo withStartDateDo: [:date | date] ifNone: ['Unassigned']]
+		rendering: [ :toDo | toDo withStartDateDo: [ :date | date ] ifNone: [ 'Unassigned' ] ]
 ]
 
 { #category : #styling }

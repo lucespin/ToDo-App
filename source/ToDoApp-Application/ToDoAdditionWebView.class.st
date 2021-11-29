@@ -19,7 +19,8 @@ ToDoAdditionWebView >> configureTriggers [
 						addToDo: aToDo;
 						setCurrentWebViewTo: ToDosDashboardWebView new
 					]
-				ifUnable: [ self session applicationContext setCurrentWebViewTo: ToDoEditionWebView newWhenDescriptionIsEmpty ]
+				ifUnable:
+					[ self session applicationContext setCurrentWebViewTo: ToDoEditionWebView newWhenDescriptionIsEmpty ]
 			];
 		render: self session applicationContext identifiedCurrentWebView
 ]
@@ -37,8 +38,9 @@ ToDoAdditionWebView >> initialize [
 { #category : #initialization }
 ToDoAdditionWebView >> initializeAcceptButton [
 
-	acceptButton := self componentSupplier asynchronicButtonLabeled: 'Accept'
-		                applying: [ :theButton |  ]
+	acceptButton := self componentSupplier
+		asynchronicButtonLabeled: 'Accept'
+		applying: [ :theButton |  ]
 ]
 
 { #category : #rendering }

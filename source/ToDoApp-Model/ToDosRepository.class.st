@@ -46,12 +46,9 @@ ToDosRepository >> initialize [
 ]
 
 { #category : #movement }
-ToDosRepository >> removeToDo: aToDo [ 
+ToDosRepository >> removeToDo: aToDo [
 
-	AssertionChecker
-		enforce: [aToDo isOpen]
-		because: 'The ToDo is not open'
-		raising: AssertionFailed.
+	AssertionChecker enforce: [ aToDo isOpen ] because: 'The ToDo is not open' raising: AssertionFailed.
 
 	toDos remove: aToDo
 ]
@@ -65,7 +62,8 @@ ToDosRepository >> toDos [
 { #category : #updating }
 ToDosRepository >> updateToDo: aToDo with: anUpdatedToDo [
 
-	toDos detect: [ :aStoredToDo | aStoredToDo = aToDo ]
+	toDos
+		detect: [ :aStoredToDo | aStoredToDo = aToDo ]
 		ifFound: [ :aStoredToDo | aStoredToDo synchronizeWith: anUpdatedToDo ]
-		ifNone: [ ObjectNotFound signal: ( 'No se encontró <1p>.' expandMacrosWith: aToDo ) ]
+		ifNone: [ ObjectNotFound signal: ('No se encontró <1p>.' expandMacrosWith: aToDo) ]
 ]
