@@ -14,14 +14,13 @@ ButtonsWebView >> buttonLabeled: aLabel [
 
 	^ self componentSupplier
 		asynchronicButtonLabeled: aLabel
-		applying:
-			[:theButton | theButton setStyleTo: self buttonStyleCommand]
+		applying: [ :theButton | theButton setStyleTo: self buttonStyleCommand ]
 ]
 
 { #category : #accessing }
 ButtonsWebView >> buttonStyleCommand [
 
-	^ [:style | 
+	^ [ :style | 
 	style
 		position: #relative;
 		left: 80 percent;

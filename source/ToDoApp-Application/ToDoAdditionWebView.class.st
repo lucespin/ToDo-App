@@ -13,15 +13,13 @@ ToDoAdditionWebView >> configureTriggers [
 
 	acceptButton on trigger
 		disable;
-		serverDo: [ 
-			toDoWebView
+		serverDo: [ toDoWebView
 				withModelDo: [ :aToDo | 
 					self session applicationContext
 						addToDo: aToDo;
 						setCurrentWebViewTo: ToDosDashboardWebView new
 					]
-				ifUnable: [ 
-				self session applicationContext setCurrentWebViewTo: ToDoWebView newWhenDescriptionIsEmpty ]
+				ifUnable: [ self session applicationContext setCurrentWebViewTo: ToDoEditionWebView newWhenDescriptionIsEmpty ]
 			];
 		render: self session applicationContext identifiedCurrentWebView
 ]

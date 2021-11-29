@@ -12,13 +12,7 @@ Class {
 { #category : #accessing }
 ToDoWebView class >> errorDescriptionFieldCommand [
 
-	^ [:field | 
-	field
-		setStyleTo: [:style | 
-			style
-				borderColor: 'red'
-			]
-	]
+	^ [ :field | field setStyleTo: [ :style | style borderColor: 'red' ] ]
 ]
 
 { #category : #'instance creation' }
@@ -32,8 +26,9 @@ ToDoWebView class >> new [
 { #category : #'instance creation' }
 ToDoWebView class >> newWhenDescriptionIsEmpty [
 
-	^ self withDescriptionFieldSuggesting: 'A ToDo must have a description'
-		  applying: self errorDescriptionFieldCommand
+	^ self
+		withDescriptionFieldSuggesting: 'A ToDo must have a description'
+		applying: self errorDescriptionFieldCommand
 ]
 
 { #category : #'private - instance creation' }
@@ -54,7 +49,7 @@ ToDoWebView >> configureTriggers [
 ToDoWebView >> dateFieldSuggesting: aPlaceholderText [
 
 	^ self componentSupplier
-		dateFieldApplying: [:theField | theField setPlaceholderTo: aPlaceholderText]
+		dateFieldApplying: [ :theField | theField setPlaceholderTo: aPlaceholderText ]
 ]
 
 { #category : #initialization }
@@ -66,8 +61,8 @@ ToDoWebView >> initializeCompletionDateField [
 { #category : #initialization }
 ToDoWebView >> initializeDescriptionFieldSuggesting: aSuggestion applying: aComponentCommand [
 
-	descriptionField := self componentSupplier singleLineTextFieldApplying: [ :theField | 
-		                    ( theField setPlaceholderTo: aSuggestion ) + aComponentCommand ]
+	descriptionField := self componentSupplier
+		singleLineTextFieldApplying: [ :theField | (theField setPlaceholderTo: aSuggestion) + aComponentCommand ]
 ]
 
 { #category : #initialization }
@@ -110,16 +105,20 @@ ToDoWebView >> updateViewsWith: aToDo [
 { #category : #building }
 ToDoWebView >> withModelDo: aBlock ifUnable: anotherBlock [
 
-	descriptionField model ifEmpty: anotherBlock ifNotEmpty: [ :toDoDescription | 
-		| toDo |
+	descriptionField model
+		ifEmpty: anotherBlock
+		ifNotEmpty: [ :toDoDescription | 
+			| toDo |
 
-		toDo := ToDo describedBy: toDoDescription.
+			toDo := ToDo describedBy: toDoDescription.
 
-		startDateField contents ifEmpty: [  ]
-			ifNotEmpty: [ :dateAsString | toDo setStartDateTo: ( Date fromString: dateAsString ) ].
+			startDateField contents
+				ifEmpty: [  ]
+				ifNotEmpty: [ :dateAsString | toDo setStartDateTo: (Date fromString: dateAsString) ].
 
-		completionDateField contents ifEmpty: [  ]
-			ifNotEmpty: [ :dateAsString | toDo setCompletionDateTo: ( Date fromString: dateAsString ) ].
-		aBlock value: toDo
-		]
+			completionDateField contents
+				ifEmpty: [  ]
+				ifNotEmpty: [ :dateAsString | toDo setCompletionDateTo: (Date fromString: dateAsString) ].
+			aBlock value: toDo
+			]
 ]

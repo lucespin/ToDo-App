@@ -8,17 +8,6 @@ Class {
 	#category : #'ToDoApp-Application'
 }
 
-{ #category : #styling }
-ToDosDashboardWebView >> actionsButtonsStyleCommand [
-
-	^ [ :style | 
-	  style
-		  backgroundColor: '#7724FF';
-		  color: #white;
-		  fontWeight: #bold
-	  ]
-]
-
 { #category : #'accessing - column renderers' }
 ToDosDashboardWebView >> actionsColumn [
 
@@ -28,17 +17,6 @@ ToDosDashboardWebView >> actionsColumn [
 			  addContent: ( self buttonToRemove: aToDo );
 			  build
 		  ]
-]
-
-{ #category : #styling }
-ToDosDashboardWebView >> addButtonStyleCommand [
-
-	^ [ :style | 
-	  style
-		  backgroundColor: '#57FF7A';
-		  color: #white;
-		  fontWeight: #bold
-	  ]
 ]
 
 { #category : #adding }
@@ -73,7 +51,7 @@ ToDosDashboardWebView >> buttonToEdit: aToDo [
 	| editButton |
 
 	editButton := self componentSupplier asynchronicButtonLabeled: 'Edit'
-		              applying: [ :button | button setStyleTo: self actionsButtonsStyleCommand ].
+		              applying: [ :button | button setStyleTo: self buttonsStyleCommand ].
 
 	editButton on trigger
 		serverDo: [ 
@@ -89,13 +67,24 @@ ToDosDashboardWebView >> buttonToRemove: aToDo [
 	| removalButton |
 
 	removalButton := self componentSupplier asynchronicButtonLabeled: 'Remove'
-		                applying: [ :button | button setStyleTo: self actionsButtonsStyleCommand ].
+		                applying: [ :button | button setStyleTo: self buttonsStyleCommand ].
 
 	removalButton on trigger
 		serverDo: [ self session applicationContext removeToDo: aToDo ];
 		render: self session applicationContext identifiedCurrentWebView.
 
 	^ removalButton
+]
+
+{ #category : #styling }
+ToDosDashboardWebView >> buttonsStyleCommand [
+
+	^ [ :style | 
+	  style
+		  backgroundColor: '#7724FF';
+		  color: #white;
+		  fontWeight: #bold
+	  ]
 ]
 
 { #category : #'accessing - column renderers' }
@@ -128,7 +117,7 @@ ToDosDashboardWebView >> initializeAdditionButton [
 	additionButton := self componentSupplier
 		                  asynchronicButtonLabeled: 'Add ToDo'
 		                  applying: [ :button | 
-		                  button setStyleTo: self addButtonStyleCommand ].
+		                  button setStyleTo: self buttonsStyleCommand ].
 
 	additionButton on trigger
 		serverDo: [ 
