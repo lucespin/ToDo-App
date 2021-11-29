@@ -61,3 +61,11 @@ ToDosRepository >> toDos [
 
 	^ toDos
 ]
+
+{ #category : #updating }
+ToDosRepository >> updateToDo: aToDo with: anUpdatedToDo [
+
+	toDos detect: [ :aStoredToDo | aStoredToDo = aToDo ]
+		ifFound: [ :aStoredToDo | aStoredToDo synchronizeWith: anUpdatedToDo ]
+		ifNone: [ ObjectNotFound signal: ( 'No se encontró <1p>.' expandMacrosWith: aToDo ) ]
+]
