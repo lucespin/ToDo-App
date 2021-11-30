@@ -45,6 +45,17 @@ EmployeeRegistrationWebView >> addEmployee [
 	self session applicationContext addEmployee: employee
 ]
 
+{ #category : #accessing }
+EmployeeRegistrationWebView >> buttonStyleCommand [
+
+	^ [ :style | 
+	  style
+		  backgroundColor: '#7724FF';
+		  color: #white;
+		  fontWeight: #bold
+	  ]
+]
+
 { #category : #initialization }
 EmployeeRegistrationWebView >> configureTriggers [
 
@@ -81,7 +92,7 @@ EmployeeRegistrationWebView >> initializeNameField [
 EmployeeRegistrationWebView >> initializeRegistrationButton [
 
 	acceptButton := self componentSupplier asynchronicButtonLabeled: 'Accept'
-		                applying: [ :theButton |  ]
+		                applying: [ :theButton | theButton setStyleTo: self buttonStyleCommand ]
 ]
 
 { #category : #initialization }
