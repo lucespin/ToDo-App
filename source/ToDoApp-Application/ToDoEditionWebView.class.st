@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-ToDoEditionWebView class >> editing: aToDoToEdit [
+ToDoEditionWebView class >> editing: aToDoToEdit renderedOn: aToDoWebView [
 
-	^ self new initializeEditing: aToDoToEdit
+	^ self new initializeEditing: aToDoToEdit renderedOn: aToDoWebView
 ]
 
 { #category : #initialization }
@@ -26,8 +26,9 @@ ToDoEditionWebView >> configureTriggers [
 						updateToDo: toDoToEdit with: anUpdatedToDo;
 						setCurrentWebViewTo: ToDosDashboardWebView new
 					]
-				ifUnable:
-					[ self session applicationContext setCurrentWebViewTo: ToDoWebView newWhenDescriptionIsEmpty ]
+				ifUnable: [ self session applicationContext
+						setCurrentWebViewTo: (self class editing: toDoToEdit renderedOn: ToDoWebView newWhenDescriptionIsEmpty)
+					]
 			];
 		render: self session applicationContext identifiedCurrentWebView
 ]
@@ -40,21 +41,16 @@ ToDoEditionWebView >> initializeAcceptButton [
 ]
 
 { #category : #initialization }
-ToDoEditionWebView >> initializeEditing: aToDoToEdit [
+ToDoEditionWebView >> initializeEditing: aToDoToEdit renderedOn: aToDoWebView [
 
 	toDoToEdit := aToDoToEdit.
+	
+	toDoWebView := aToDoWebView.
+	toDoWebView updateViewsWith: toDoToEdit.
 
 	self
-		initializeToDoWebView;
 		initializeAcceptButton;
 		configureTriggers
-]
-
-{ #category : #initialization }
-ToDoEditionWebView >> initializeToDoWebView [
-
-	toDoWebView := ToDoWebView new.
-	toDoWebView updateViewsWith: toDoToEdit
 ]
 
 { #category : #rendering }
