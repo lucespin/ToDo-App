@@ -85,9 +85,13 @@ ToDoWebView >> initializeWithDescriptionFieldSuggesting: aSuggestion applying: a
 ToDoWebView >> renderContentOn: aCanvas [
 
 	aCanvas
-		render: startDateField;
-		render: descriptionField;
-		render: completionDateField
+		render:
+			(self componentSupplier gridBuilder
+				columnsPerRow: 2;
+				addContent: startDateField;
+				addContent: descriptionField;
+				addContent: completionDateField;
+				build)
 ]
 
 { #category : #configuring }

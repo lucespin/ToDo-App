@@ -45,6 +45,17 @@ EmployeesWebView >> addColumnTitled: aTitle rendering: aRenderingCommand [
 	  ]
 ]
 
+{ #category : #rendering }
+EmployeesWebView >> buttonStyleCommand [
+
+	^ [ :style | 
+	  style
+		  backgroundColor: '#7724FF';
+		  color: #white;
+		  fontWeight: #bold
+	  ]
+]
+
 { #category : #accessing }
 EmployeesWebView >> employees [
 
@@ -63,8 +74,9 @@ EmployeesWebView >> initialize [
 { #category : #initialization }
 EmployeesWebView >> initializeRegistrationButton [
 
-	registrationButton := self componentSupplier asynchronicButtonLabeled: 'Add Employee'
-		                      applying: [ :theButton |  ].
+	registrationButton := self componentSupplier
+		asynchronicButtonLabeled: 'Add Employee'
+		applying: [ :theButton | theButton setStyleTo: self buttonStyleCommand ].
 
 	registrationButton on trigger
 		serverDo: [ self session applicationContext setCurrentWebViewTo: EmployeeRegistrationWebView new ];

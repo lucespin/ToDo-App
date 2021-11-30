@@ -8,6 +8,17 @@ Class {
 	#category : #'ToDoApp-Application'
 }
 
+{ #category : #styling }
+ToDoAdditionWebView >> buttonsStyleCommand [
+
+	^ [ :style | 
+	  style
+		  backgroundColor: '#7724FF';
+		  color: #white;
+		  fontWeight: #bold
+	  ]
+]
+
 { #category : #configuring }
 ToDoAdditionWebView >> configureTriggers [
 
@@ -20,7 +31,7 @@ ToDoAdditionWebView >> configureTriggers [
 						setCurrentWebViewTo: ToDosDashboardWebView new
 					]
 				ifUnable:
-					[ self session applicationContext setCurrentWebViewTo: ToDoEditionWebView newWhenDescriptionIsEmpty ]
+					[ self session applicationContext setCurrentWebViewTo: ToDoWebView newWhenDescriptionIsEmpty ]
 			];
 		render: self session applicationContext identifiedCurrentWebView
 ]
@@ -40,7 +51,7 @@ ToDoAdditionWebView >> initializeAcceptButton [
 
 	acceptButton := self componentSupplier
 		asynchronicButtonLabeled: 'Accept'
-		applying: [ :theButton |  ]
+		applying: [ :theButton | theButton setStyleTo: self buttonsStyleCommand ]
 ]
 
 { #category : #rendering }
