@@ -57,7 +57,7 @@ ToDosDashboardWebView >> buttonToEdit: aToDo [
 		applying: [ :button | button setStyleTo: self buttonsStyleCommand ].
 
 	editButton on trigger
-		serverDo: [ self session applicationContext setCurrentWebViewTo: (ToDoEditionWebView editing: aToDo) ];
+		serverDo: [ self session applicationContext setCurrentWebViewTo: (ToDoEditionWebView editing: aToDo renderedOn: ToDoWebView new) ];
 		render: self session applicationContext identifiedCurrentWebView.
 
 	^ editButton
@@ -124,7 +124,7 @@ ToDosDashboardWebView >> initializeAdditionButton [
 	additionButton on trigger
 		serverDo: [ 
 			self session applicationContext setCurrentWebViewTo:
-					ToDoAdditionWebView new ];
+					(ToDoAdditionWebView showing: ToDoWebView new) ];
 		render: self session applicationContext identifiedCurrentWebView
 ]
 

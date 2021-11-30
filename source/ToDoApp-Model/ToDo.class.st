@@ -55,25 +55,6 @@ ToDo class >> describedBy: aDescription [
 	^ self new initializeDescribedBy: aDescription
 ]
 
-{ #category : #'instance creation' }
-ToDo class >> describedBy: aDescription withStartDate: aDate [
-
-	self assertDescriptionIsNotEmpty: aDescription.
-
-	^ self new initializeDescribedBy: aDescription withStartDate: aDate
-]
-
-{ #category : #'instance creation' }
-ToDo class >> describedBy: aDescription withStartDate: aStartDate andCompletionDate: aCompletionDate [
-
-	self assertDescriptionIsNotEmpty: aDescription.
-
-	^ self new
-		initializeDescribedBy: aDescription
-		withStartDate: aStartDate
-		andCompletionDate: aCompletionDate
-]
-
 { #category : #'private - asserting' }
 ToDo >> assert: aStarDate isOnOrPreviousTo: aCompletionDate ifNotRaise: errorToSignal [
 

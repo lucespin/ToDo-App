@@ -8,6 +8,12 @@ Class {
 	#category : #'ToDoApp-Application'
 }
 
+{ #category : #'instance creation' }
+ToDoAdditionWebView class >> showing: aToDoWebView [
+
+	^ self new initializeShowing: aToDoWebView
+]
+
 { #category : #styling }
 ToDoAdditionWebView >> buttonsStyleCommand [
 
@@ -30,20 +36,11 @@ ToDoAdditionWebView >> configureTriggers [
 						addToDo: aToDo;
 						setCurrentWebViewTo: ToDosDashboardWebView new
 					]
-				ifUnable:
-					[ self session applicationContext setCurrentWebViewTo: ToDoWebView newWhenDescriptionIsEmpty ]
+				ifUnable: [ self session applicationContext
+						setCurrentWebViewTo: (self class showing: ToDoWebView newWhenDescriptionIsEmpty)
+					]
 			];
 		render: self session applicationContext identifiedCurrentWebView
-]
-
-{ #category : #initialization }
-ToDoAdditionWebView >> initialize [
-
-	toDoWebView := ToDoWebView new.
-
-	self
-		initializeAcceptButton;
-		configureTriggers
 ]
 
 { #category : #initialization }
@@ -52,6 +49,16 @@ ToDoAdditionWebView >> initializeAcceptButton [
 	acceptButton := self componentSupplier
 		asynchronicButtonLabeled: 'Accept'
 		applying: [ :theButton | theButton setStyleTo: self buttonsStyleCommand ]
+]
+
+{ #category : #initialization }
+ToDoAdditionWebView >> initializeShowing: aToDoWebView [
+
+	toDoWebView := aToDoWebView.
+
+	self
+		initializeAcceptButton;
+		configureTriggers
 ]
 
 { #category : #rendering }

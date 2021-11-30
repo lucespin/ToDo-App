@@ -161,17 +161,7 @@ ToDoTest >> testSetAStartDateAfterCompletionDateShouldFail [
 ToDoTest >> testWhenDescriptionIsEmptyThenToDoCreationShouldFail [
 
 	self
-		should: [ToDo describedBy: '']
-		raise: InstanceCreationFailed
-		withMessageText: 'A ToDo must have a description.'.
-
-	self
-		should: [ToDo describedBy: '' withStartDate: Date today]
-		raise: InstanceCreationFailed
-		withMessageText: 'A ToDo must have a description.'.
-
-	self
-		should: [ToDo describedBy: '' withStartDate: Date today andCompletionDate: Date today]
+		should: [ ToDo describedBy: '' ]
 		raise: InstanceCreationFailed
 		withMessageText: 'A ToDo must have a description.'
 ]

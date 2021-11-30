@@ -101,13 +101,13 @@ ToDoWebView >> updateViewsWith: aToDo [
 
 	descriptionField changeModelTo: aToDo description.
 
-	aToDo withCompletionDateDo: [ :aCompletionDate | 
-		completionDateField changeModelTo: aCompletionDate ]
+	aToDo
+		withCompletionDateDo: [ :aCompletionDate | completionDateField changeModelTo: aCompletionDate ]
 		ifNone: [  ]
 ]
 
 { #category : #building }
-ToDoWebView >> withModelDo: aBlock ifUnable: anotherBlock [
+ToDoWebView >> withModelDo: aToDoBlock ifUnable: anotherBlock [
 
 	descriptionField model
 		ifEmpty: anotherBlock
@@ -123,6 +123,6 @@ ToDoWebView >> withModelDo: aBlock ifUnable: anotherBlock [
 			completionDateField contents
 				ifEmpty: [  ]
 				ifNotEmpty: [ :dateAsString | toDo setCompletionDateTo: (Date fromString: dateAsString) ].
-			aBlock value: toDo
+			aToDoBlock value: toDo
 			]
 ]
